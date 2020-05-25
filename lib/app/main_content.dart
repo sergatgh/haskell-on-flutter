@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
 
 import 'entities/content_link.dart';
 
@@ -16,10 +17,25 @@ class ListOfCategories extends StatelessWidget {
     );
   }
 
-  ListView buildListView(BuildContext context) {
-    return ListView(
-          children: this.categories.map(
-            (c) => buildLink(context, c)).toList());
+  Widget buildListView(BuildContext context) {
+    return GroupedListView(
+      elements: this.categories,
+      groupBy: (element) => element.category,
+      groupSeparatorBuilder: _buildGroupSeparator,
+      itemBuilder: (context, element) => buildLink(context, element),
+      order: GroupedListOrder.ASC,
+    );
+  }
+
+  Widget _buildGroupSeparator(dynamic groupByValue) {
+    return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: Text(
+              groupByValue,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          );
   }
 
   AppBar buildAppBar() {
@@ -31,7 +47,7 @@ class ListOfCategories extends StatelessWidget {
   Widget buildLink(BuildContext context, ContentPageData content) {
     return ListTile(
         leading: content.icon,
-        title: Text(content.category + " / " + content.title),
+        title: Text(content.title),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {
           Navigator.of(context).pushNamed(content.title);
