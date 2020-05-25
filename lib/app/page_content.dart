@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/github.dart';
 import 'package:share/share.dart';
 
 import 'entities/content.dart';
@@ -25,13 +26,25 @@ class ContentPage extends StatelessWidget {
   Widget buildTab(ContentData contentData) {
     return ListView(
       children: [
-        MarkdownBody(data: contentData.content),
+        buildCode(contentData.content),
         FlatButton(
             child: Text("Share"),
             onPressed: () => Share.share(contentData.content))
       ],
       padding: EdgeInsets.all(16.0),
     );
+  }
+
+  Widget buildCode(String code) {
+    return HighlightView(
+              code,
+              language: 'haskell',
+              theme: githubTheme,
+              padding: EdgeInsets.all(12),
+              textStyle: TextStyle(
+                  fontFamily:
+                      'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'),
+            );
   }
 
   Widget buildNavigationBar() {
