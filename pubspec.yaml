@@ -26,3 +26,6 @@ flutter:
 
   assets:
     - assets/Code/
+    - assets/Code/Algorythms/
+    - assets/Code/Algorythms/Merge Sort/
+    - assets/Code/Beginning/

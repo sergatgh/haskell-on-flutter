@@ -6,7 +6,8 @@ class ContentPageData {
   final Icon icon;
   final String title;
   final List<ContentData> contents;
+  String category;
 
-  ContentPageData({this.icon, this.title, this.contents});
+  ContentPageData({this.icon, this.title, this.contents, this.category = "Other"});
 
 }

@@ -31,7 +31,7 @@ class ListOfCategories extends StatelessWidget {
   Widget buildLink(BuildContext context, ContentPageData content) {
     return ListTile(
         leading: content.icon,
-        title: Text(content.title),
+        title: Text(content.category + " / " + content.title),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {
           Navigator.of(context).pushNamed(content.title);
