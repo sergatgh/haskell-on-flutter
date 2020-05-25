@@ -41,6 +41,13 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     return MaterialApp(
       home: getHome(),
       routes: getRoutes(),
+      theme: getThemeData(),
+    );
+  }
+
+  ThemeData getThemeData() {
+    return ThemeData(
+      primaryColor: Color.fromARGB(255, 41, 62, 93)
     );
   }
 

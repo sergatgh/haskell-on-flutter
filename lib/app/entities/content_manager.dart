@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities/content.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:recase/recase.dart';
 
 class ContentManager {
   Future<String> get _localPath async {
@@ -53,8 +54,7 @@ class ContentManager {
     return Future.value(result);
   }
 
-  Future<ContentPageData> getContentData(
-      String file) async {
+  Future<ContentPageData> getContentData(String file) async {
     var result = ContentPageData(
         contents: [],
         icon: Icon(Icons.ac_unit),
@@ -65,11 +65,17 @@ class ContentManager {
   }
 
   String getName(String name) {
+    String result;
+    
     if (multiVariant(name)) {
-      return Uri.decodeFull(name.split('/')[3]);
+      result = Uri.decodeFull(name.split('/')[3]);
+    } else {
+      result = name.split('/').last.replaceAll('.hs', '');
     }
+    
+    ReCase rc = new ReCase(result);
 
-    return name.split('/').last.replaceAll('.hs', '').replaceAll('-', ' ');
+    return rc.titleCase;
   }
 
   String getCategory(String name) {
