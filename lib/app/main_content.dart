@@ -11,13 +11,20 @@ class ListOfCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text('Haskell is Awesome'),
-      ),
-      body:
-          ListView(
-            children: this.categories.map(
-              (c) => buildLink(context, c)).toList()),
+      appBar: buildAppBar(),
+      body: buildListView(context),
+    );
+  }
+
+  ListView buildListView(BuildContext context) {
+    return ListView(
+          children: this.categories.map(
+            (c) => buildLink(context, c)).toList());
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      title: Text('Haskell is Awesome'),
     );
   }
 
