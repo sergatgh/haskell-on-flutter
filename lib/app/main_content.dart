@@ -29,13 +29,13 @@ class ListOfCategories extends StatelessWidget {
 
   Widget _buildGroupSeparator(dynamic groupByValue) {
     return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-                child: Text(
-              groupByValue,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )),
-          );
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+          child: Text(
+        groupByValue,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      )),
+    );
   }
 
   AppBar buildAppBar() {
@@ -45,12 +45,20 @@ class ListOfCategories extends StatelessWidget {
   }
 
   Widget buildLink(BuildContext context, ContentPageData content) {
-    return ListTile(
-        leading: content.icon,
-        title: Text(content.title),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          Navigator.of(context).pushNamed(content.title);
-        });
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        child: ListTile(
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: content.icon,
+            title: Text(content.title),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.of(context).pushNamed(content.title);
+            }),
+      ),
+    );
   }
 }
