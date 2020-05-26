@@ -1,4 +1,4 @@
-package com.example.haskell_is_beautiful
+package com.WittyLion.haskell_is_beautiful
 
 import io.flutter.embedding.android.FlutterActivity
 
