@@ -5,9 +5,9 @@ class ContentPageData {
 
   final Icon icon;
   final String title;
-  final List<ContentData> contents;
+  final List<String> files;
   String category;
 
-  ContentPageData({this.icon, this.title, this.contents, this.category = "Other"});
+  ContentPageData({this.icon, this.title, this.files, this.category = "Other"});
 
 }

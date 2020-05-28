@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:share/share.dart';
 
 import 'entities/content.dart';
 import 'entities/content_link.dart';
+import 'entities/content_manager.dart';
 
-class ContentPage extends StatelessWidget {
+class ContentPage extends StatefulWidget {
+  final ContentManager contentManager;
   final ContentPageData content;
 
-  ContentPage({this.content});
+  ContentPage({this.contentManager, this.content});
+
+  @override
+  State<StatefulWidget> createState() {
+    return ContentPageState();
+  }
+}
+
+class ContentPageState extends State<ContentPage> {
+  List<ContentData> contentTabsData = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.wait(widget.content.files
+            .map((file) => widget.contentManager.getContent(rootBundle, file)))
+        .then((value) => setState(() {
+              contentTabsData = value;
+            }));
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: content.contents.length,
+      length: contentTabsData.length,
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: buildNavigationBar(),
         body: TabBarView(
-            children: content.contents.map((c) => buildTab(c)).toList()),
+            children: contentTabsData.map((c) => buildTab(c)).toList()),
       ),
     );
   }
@@ -38,18 +61,18 @@ class ContentPage extends StatelessWidget {
 
   Widget buildCode(String code) {
     return HighlightView(
-              code,
-              language: 'haskell',
-              theme: githubTheme,
-              padding: EdgeInsets.all(12),
-              textStyle: TextStyle(
-                  fontFamily:
-                      'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'),
-            );
+      code,
+      language: 'haskell',
+      theme: githubTheme,
+      padding: EdgeInsets.all(12),
+      textStyle: TextStyle(
+          fontFamily:
+              'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'),
+    );
   }
 
   Widget buildNavigationBar() {
-    if (content.contents.length > 1) {
+    if (contentTabsData.length > 1) {
       var icons = [
         Icons.looks_one,
         Icons.looks_two,
@@ -60,20 +83,31 @@ class ContentPage extends StatelessWidget {
       ];
       var tabs = <Tab>[];
 
-      for (var i = 0; i < content.contents.length; i++) {
-        var page = content.contents[i];
-        tabs.add(Tab(icon: page.icon ?? Icon(icons[i])));
+      for (var i = 0; i < contentTabsData.length; i++) {
+        var page = contentTabsData[i];
+        var icon = page.icon;
+        if (icon == null) {
+          if (i < icons.length) {
+            icon = Icon(icons[i]);
+          } else {
+            icon = Icon(Icons.library_books);
+          }
+        }
+
+        tabs.add(Tab(
+          icon: icon,
+        ));
       }
 
       return AppBar(
         bottom: TabBar(
           tabs: tabs,
         ),
-        title: Text(content.title),
+        title: Text(widget.content.title),
       );
     } else {
       return AppBar(
-        title: Text(content.title),
+        title: Text(widget.content.title),
       );
     }
   }

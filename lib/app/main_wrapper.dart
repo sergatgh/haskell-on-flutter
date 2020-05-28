@@ -62,6 +62,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     var map = Map.fromIterable(this.contentPageData,
         key: (c) => c.title as String,
         value: (c) => (BuildContext context) => ContentPage(
+              contentManager: widget.contentManager,
               content: c,
             ));
 

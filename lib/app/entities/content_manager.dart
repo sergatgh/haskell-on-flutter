@@ -33,15 +33,14 @@ class ContentManager {
 
     for (var file in files) {
       var key = getName(file);
-      var content = await getContent(context, file);
-      ContentPageData pageData;
+      
       if (map.containsKey(key)) {
-        pageData = map[key];
+        var pageData = map[key];
+        pageData.files.add(file);
       } else {
-        pageData = await getContentData(file);
+        var pageData = await getContentData(file);
         map.putIfAbsent(key, () => pageData);
       }
-      pageData.contents.add(content);
     }
 
     return Future.value(map.values.toList());
@@ -56,7 +55,7 @@ class ContentManager {
 
   Future<ContentPageData> getContentData(String file) async {
     var result = ContentPageData(
-        contents: [],
+        files: [file],
         icon: Icon(Icons.ac_unit),
         title: getName(file),
         category: getCategory(file));
