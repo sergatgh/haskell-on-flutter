@@ -4,15 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities/content.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:recase/recase.dart';
 
 class ContentManager {
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    return directory.path;
-  }
 
   Future<List<String>> getCodeFiles(AssetBundle context) async {
     // >> To get paths you need these 2 lines

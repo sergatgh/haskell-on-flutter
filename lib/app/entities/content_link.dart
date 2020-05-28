@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:haskell_is_beautiful/app/entities/content.dart';
 
 class ContentPageData {
 

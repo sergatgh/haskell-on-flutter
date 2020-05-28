@@ -4,21 +4,48 @@ import 'package:grouped_list/grouped_list.dart';
 
 import 'entities/content_link.dart';
 
-class ListOfCategories extends StatelessWidget {
+class CategoryListPage extends StatelessWidget {
   final List<ContentPageData> categories;
 
-  ListOfCategories({this.categories});
+  CategoryListPage({this.categories});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: buildAppBar(),
-      body: buildListView(context), 
+      appBar: buildAppBar(context),
+      body: buildListView(context),
     );
   }
 
   Widget buildListView(BuildContext context) {
+    return CategoryListView(categories: this.categories);
+  }
+
+  PreferredSizeWidget buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text('Haskell is Awesome'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            showSearch(
+                context: context,
+                delegate: ContentSearch(categories: categories));
+          },
+        )
+      ],
+    );
+  }
+}
+
+class CategoryListView extends StatelessWidget {
+  final List<ContentPageData> categories;
+
+  CategoryListView({this.categories});
+
+  @override
+  Widget build(BuildContext context) {
     return GroupedListView(
       elements: this.categories,
       groupBy: (element) => element.category,
@@ -39,12 +66,6 @@ class ListOfCategories extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
-    return AppBar(
-      title: Text('Haskell is Awesome'),
-    );
-  }
-
   Widget buildLink(BuildContext context, ContentPageData content) {
     return Card(
       elevation: 8.0,
@@ -61,5 +82,46 @@ class ListOfCategories extends StatelessWidget {
             }),
       ),
     );
+  }
+}
+
+class ContentSearch extends SearchDelegate<ContentPageData> {
+  final List<ContentPageData> categories;
+
+  ContentSearch({this.categories});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [Icon(Icons.clear)];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return CategoryListView(
+        categories: this
+            .categories
+            .where((element) =>
+                element.title.toLowerCase().contains(query.toLowerCase()))
+            .toList());
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return CategoryListView(
+        categories: this
+            .categories
+            .where((element) =>
+                element.title.toLowerCase().contains(query.toLowerCase()))
+            .toList());
   }
 }

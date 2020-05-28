@@ -53,7 +53,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   }
 
   Widget getHome() {
-      return ListOfCategories(
+      return CategoryListPage(
         categories: this.contentPageData,
       );
   }
