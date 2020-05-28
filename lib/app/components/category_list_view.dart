@@ -4,7 +4,7 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
 
 class CategoryListView extends StatelessWidget {
-  final List<ContentPageData> categories;
+  final List<ContentLink> categories;
 
   CategoryListView({this.categories});
 
@@ -30,7 +30,7 @@ class CategoryListView extends StatelessWidget {
     );
   }
 
-  Widget buildLink(BuildContext context, ContentPageData content) {
+  Widget buildLink(BuildContext context, ContentLink content) {
     return Card(
       elevation: 8.0,
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),

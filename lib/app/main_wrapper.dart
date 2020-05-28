@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
-import 'package:haskell_is_beautiful/app/entities/content_manager.dart';
-import 'package:haskell_is_beautiful/app/pages/category_list_page.dart';
-import 'package:haskell_is_beautiful/app/pages/page_content.dart';
+import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:haskell_is_beautiful/app/pages.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   final ContentManager contentManager;
@@ -19,7 +17,7 @@ class HaskellPocketBookApp extends StatefulWidget {
 
 class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   
-  List<ContentPageData> contentPageData = [];
+  List<ContentLink> contentPageData = [];
 
   @override
   void initState() {
@@ -55,6 +53,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   Widget getHome() {
       return CategoryListPage(
         categories: this.contentPageData,
+        contentManager: this.widget.contentManager,
       );
   }
 

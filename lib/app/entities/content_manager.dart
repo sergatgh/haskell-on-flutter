@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,6 @@ import 'package:haskell_is_beautiful/app/entities/content_link.dart';
 import 'package:recase/recase.dart';
 
 class ContentManager {
-
   Future<List<String>> getCodeFiles(AssetBundle context) async {
     // >> To get paths you need these 2 lines
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -21,18 +21,18 @@ class ContentManager {
         .toList());
   }
 
-  Future<List<ContentPageData>> getContents(AssetBundle context) async {
+  Future<List<ContentLink>> getContents(AssetBundle context) async {
     var files = await getCodeFiles(context);
-    var map = <String, ContentPageData>{};
+    var map = <String, ContentLink>{};
 
     for (var file in files) {
       var key = getName(file);
-      
+
       if (map.containsKey(key)) {
         var pageData = map[key];
         pageData.files.add(file);
       } else {
-        var pageData = await getContentData(file);
+        var pageData = await getContentLink(file);
         map.putIfAbsent(key, () => pageData);
       }
     }
@@ -47,8 +47,8 @@ class ContentManager {
     return Future.value(result);
   }
 
-  Future<ContentPageData> getContentData(String file) async {
-    var result = ContentPageData(
+  Future<ContentLink> getContentLink(String file) async {
+    var result = ContentLink(
         files: [file],
         icon: Icon(Icons.ac_unit),
         title: getName(file),
@@ -57,15 +57,36 @@ class ContentManager {
     return Future.value(result);
   }
 
+  Future<String> linkContainsContent(
+      AssetBundle context, ContentLink link, String content) async {
+    var list = await Future.wait(
+        link.files.map((file) => context.loadString(Uri.decodeFull(file))));
+
+    var text = list.firstWhere((element) => element.toLowerCase().contains(content.toLowerCase()), orElse: () => null);
+    if (text == null) return null;
+    LineSplitter lineSplitter = LineSplitter();
+    var lines = lineSplitter.convert(text);
+
+    var index = lines.indexWhere((element) => element.toLowerCase().contains(content.toLowerCase()));
+
+    var minLine = 0;
+    var maxLine = lines.length - 1;
+
+    maxLine = min(maxLine, index + 2);
+    minLine = max(minLine, index - 2);
+
+    return lines.sublist(minLine, maxLine).join('\n');
+  }
+
   String getName(String name) {
     String result;
-    
+
     if (multiVariant(name)) {
       result = Uri.decodeFull(name.split('/')[3]);
     } else {
       result = name.split('/').last.replaceAll('.hs', '');
     }
-    
+
     ReCase rc = new ReCase(result);
 
     return rc.titleCase;

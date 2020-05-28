@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/components/category_list_view.dart';
 import 'package:haskell_is_beautiful/app/components/content_search.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/entities/content_manager.dart';
 
 class CategoryListPage extends StatelessWidget {
-  final List<ContentPageData> categories;
+  final List<ContentLink> categories;
+  final ContentManager contentManager;
 
-  CategoryListPage({this.categories});
+  CategoryListPage({this.categories, this.contentManager});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CategoryListPage extends StatelessWidget {
           onPressed: () {
             showSearch(
                 context: context,
-                delegate: ContentSearch(categories: categories));
+                delegate: ContentSearch(categories: categories, contentManager: this.contentManager));
           },
         )
       ],

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_highlight/flutter_highlight.dart';
-import 'package:flutter_highlight/themes/github.dart';
-import 'package:haskell_is_beautiful/app/entities/content.dart';
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
-import 'package:haskell_is_beautiful/app/entities/content_manager.dart';
-import 'package:share/share.dart';
-
+import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
+import 'package:haskell_is_beautiful/app/components/share_button.dart';
+import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {
   final ContentManager contentManager;
-  final ContentPageData content;
+  final ContentLink content;
 
   ContentPage({this.contentManager, this.content});
 
@@ -49,25 +45,8 @@ class ContentPageState extends State<ContentPage> {
 
   Widget buildTab(ContentData contentData) {
     return ListView(
-      children: [
-        buildCode(contentData.content),
-        FlatButton(
-            child: Text("Share"),
-            onPressed: () => Share.share(contentData.content))
-      ],
+      children: [HaskellCode(contentData.content), ShareButton()],
       padding: EdgeInsets.all(16.0),
-    );
-  }
-
-  Widget buildCode(String code) {
-    return HighlightView(
-      code,
-      language: 'haskell',
-      theme: githubTheme,
-      padding: EdgeInsets.all(12),
-      textStyle: TextStyle(
-          fontFamily:
-              'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'),
     );
   }
 

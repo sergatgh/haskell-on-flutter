@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/components/search_results_with_code.dart';
+import 'package:haskell_is_beautiful/app/entities.dart';
 
 import 'category_list_view.dart';
 
-class ContentSearch extends SearchDelegate<ContentPageData> {
-  final List<ContentPageData> categories;
+class ContentSearch extends SearchDelegate<ContentLink> {
+  final List<ContentLink> categories;
+  final ContentManager contentManager;
 
-  ContentSearch({this.categories});
+  ContentSearch({this.categories, this.contentManager});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -25,21 +27,32 @@ class ContentSearch extends SearchDelegate<ContentPageData> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return CategoryListView(
-        categories: this
-            .categories
-            .where((element) =>
-                element.title.toLowerCase().contains(query.toLowerCase()))
-            .toList());
+    return SearchResultsWithCode(
+      categories: this.categories,
+      query: this.query,
+      contentManager: this.contentManager,
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return CategoryListView(
-        categories: this
-            .categories
-            .where((element) =>
-                element.title.toLowerCase().contains(query.toLowerCase()))
-            .toList());
+    var list = this
+        .categories
+        .where((element) =>
+            element.title.toLowerCase().contains(query.toLowerCase()) ||
+            element.category.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    if (list.isEmpty) {
+      return Center(
+          child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "There are no quick suggestions. Try to click enter for full search.",
+                textAlign: TextAlign.center,
+              )));
+    }
+
+    return CategoryListView(categories: list);
   }
 }
