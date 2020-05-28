@@ -12,6 +12,12 @@ y = "Witty Lion" !! 4
 noElements = null []
 
 
+-- Count and Length:
+-- var array = new [] {1,2,3};
+-- array.Count()
+count = length [1,2,3]
+
+
 -- Insert in the beggining:
 -- var list = "tick".ToList();
 -- list.Insert(0, 'S');
@@ -26,24 +32,28 @@ bingo = "bin" ++ "go"
 
 
 -- First element:
--- var first = new [] {1,2,3}.First();
+-- var array = new [] {1,2,3};
+-- var first = array.First();
 one = head [1,2,3]
 w = head "woman"
 
 
 -- Last element:
--- var last = new [] {1,2,3}.Last();
+-- var array = new [] {1,2,3};
+-- var last = array.Last();
 three = last [1,2,3]
 n = last "man"
 
 
 -- Skip first:
--- var tail = new [] {1,2,3}.Skip(1);
+-- var array = new [] {1,2,3};
+-- var tail = array.Skip(1);
 skipFirst = tail [1,2,3] -- [2,3]
 
 
 -- Skip several:
--- var tail = new [] {1,2,3,4,5}.Skip(3);
+-- var array = new [] {1,2,3,4,5};
+-- var tail = array.Skip(3);
 skipSeveral = drop 3 [1,2,3,4,5] -- [4,5]
 
 
