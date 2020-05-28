@@ -11,9 +11,10 @@ class ListOfCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: buildAppBar(),
-      body: buildListView(context),
+      body: buildListView(context), 
     );
   }
 

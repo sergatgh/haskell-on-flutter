@@ -16,6 +16,7 @@ class ContentPage extends StatelessWidget {
     return DefaultTabController(
       length: content.contents.length,
       child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: buildNavigationBar(),
         body: TabBarView(
             children: content.contents.map((c) => buildTab(c)).toList()),
