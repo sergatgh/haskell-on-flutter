@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
+import 'package:haskell_is_beautiful/app/entities/content.dart';
+import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/entities/content_manager.dart';
 import 'package:share/share.dart';
 
-import 'entities/content.dart';
-import 'entities/content_link.dart';
-import 'entities/content_manager.dart';
 
 class ContentPage extends StatefulWidget {
   final ContentManager contentManager;

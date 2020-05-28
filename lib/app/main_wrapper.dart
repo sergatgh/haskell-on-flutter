@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
 import 'package:haskell_is_beautiful/app/entities/content_manager.dart';
-import 'package:haskell_is_beautiful/app/main_content.dart';
-import 'package:haskell_is_beautiful/app/page_content.dart';
+import 'package:haskell_is_beautiful/app/pages/category_list_page.dart';
+import 'package:haskell_is_beautiful/app/pages/page_content.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   final ContentManager contentManager;
