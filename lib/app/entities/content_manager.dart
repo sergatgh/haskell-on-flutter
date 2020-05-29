@@ -3,8 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/entities/content.dart';
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:recase/recase.dart';
 
 class ContentManager {
