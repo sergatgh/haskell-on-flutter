@@ -105,6 +105,9 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
 
     return Card(
       elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         child: column,
