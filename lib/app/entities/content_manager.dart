@@ -61,12 +61,15 @@ class ContentManager {
     var list = await Future.wait(
         link.files.map((file) => context.loadString(Uri.decodeFull(file))));
 
-    var text = list.firstWhere((element) => element.toLowerCase().contains(content.toLowerCase()), orElse: () => null);
+    var text = list.firstWhere(
+        (element) => element.toLowerCase().contains(content.toLowerCase()),
+        orElse: () => null);
     if (text == null) return null;
     LineSplitter lineSplitter = LineSplitter();
     var lines = lineSplitter.convert(text);
 
-    var index = lines.indexWhere((element) => element.toLowerCase().contains(content.toLowerCase()));
+    var index = lines.indexWhere(
+        (element) => element.toLowerCase().contains(content.toLowerCase()));
 
     var minLine = 0;
     var maxLine = lines.length - 1;
@@ -77,13 +80,13 @@ class ContentManager {
     return lines.sublist(minLine, maxLine).join('\n');
   }
 
-  String getName(String name) {
+  String getName(String path) {
     String result;
 
-    if (multiVariant(name)) {
-      result = Uri.decodeFull(name.split('/')[3]);
+    if (isMultiVariant(path)) {
+      result = Uri.decodeFull(path.split('/')[3]);
     } else {
-      result = name.split('/').last.replaceAll('.hs', '');
+      result = path.split('/').last.replaceAll('.hs', '');
     }
 
     ReCase rc = new ReCase(result);
@@ -91,21 +94,21 @@ class ContentManager {
     return rc.titleCase;
   }
 
-  String getCategory(String name) {
-    if (hasCategory(name)) {
-      return name.split('/')[2];
+  String getCategory(String path) {
+    if (hasCategory(path)) {
+      return path.split('/')[2];
     }
 
     return "Other";
   }
 
-  bool multiVariant(String name) {
-    var slashes = '/'.allMatches(name).length;
+  bool isMultiVariant(String path) {
+    var slashes = '/'.allMatches(path).length;
     return slashes >= 4;
   }
 
-  bool hasCategory(String name) {
-    var slashes = '/'.allMatches(name).length;
+  bool hasCategory(String path) {
+    var slashes = '/'.allMatches(path).length;
     return slashes >= 3;
   }
 }
