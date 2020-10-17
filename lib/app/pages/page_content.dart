@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/components/content_page/build_content_page.dart';
-import 'package:haskell_is_beautiful/app/components/tab_content/build_tab_pipeline.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {

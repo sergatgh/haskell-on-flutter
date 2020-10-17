@@ -1,11 +1,11 @@
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
-import 'package:haskell_is_beautiful/base/Pipeline.dart';
+import 'package:haskell_is_beautiful/base/pipeline.dart';
 
 class AddCode extends Processor {
   @override
-  Future safeExecute(PipelineContext context) {
+  Object safeExecute(PipelineContext context) {
     final code = context.properties["code"];
     
-    return Future.value(HaskellCode(code));
+    return HaskellCode(code);
   }
 }

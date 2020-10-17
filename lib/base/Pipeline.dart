@@ -3,15 +3,15 @@ class Pipeline {
 
   Pipeline(this.processors);
 
-  Future<List<T>> execute<T>(Map<String, Object> props) {
+  List<T> execute<T>(Map<String, Object> props) {
     final context = PipelineContext();
     context.properties.addAll(props);
     return executeWithResult(context);
   }
 
-  Future<List<T>> executeWithResult<T>(PipelineContext context) async {
+  List<T> executeWithResult<T>(PipelineContext context) {
     for (var processor in this.processors) {
-      await processor.execute(context);
+      processor.execute(context);
     }
     final result = context.properties["result"] as List;
     return result.cast<T>().toList();
@@ -19,12 +19,12 @@ class Pipeline {
 }
 
 abstract class Processor {
-  Future<Object> safeExecute(PipelineContext context);
+  Object safeExecute(PipelineContext context);
   bool safeCondition(PipelineContext context) {
     return true;
   }
 
-  Future execute(PipelineContext context) async {
+  void execute(PipelineContext context) {
     if (!context.properties.containsKey("result")) {
       context.properties["result"] = new List();
     }
@@ -32,7 +32,7 @@ abstract class Processor {
     final resultArray = context.properties["result"] as List;
 
     if (this.safeCondition(context)) {
-      final result = await this.safeExecute(context);
+      final result = this.safeExecute(context);
 
       if (result != null) {
         resultArray.add(result);

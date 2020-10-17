@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
-import 'package:haskell_is_beautiful/base/Pipeline.dart';
+import 'package:haskell_is_beautiful/base/pipeline.dart';
 
 class BuildNavigationBar extends Processor {
   @override
-  Future<Object> safeExecute(PipelineContext context) {
+  Object safeExecute(PipelineContext context) {
     var contents = context.properties["contents"] as List<ContentData>;
     var title = context.properties["title"] as String;
 
@@ -26,7 +26,7 @@ class BuildNavigationBar extends Processor {
 
     context.properties["appBar"] = appBar;
 
-    return Future.value(null);
+    return null;
   }
 
   List<Widget> buildNavigationBar(List<ContentData> contentTabsData) {
