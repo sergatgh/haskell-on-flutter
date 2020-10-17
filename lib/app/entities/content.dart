@@ -21,8 +21,4 @@ class ContentData {
 
     return element.data;
   }
-
-  String getIcon() {
-    return getOne(ContentType.icon);
-  }
 }

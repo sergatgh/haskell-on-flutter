@@ -7,7 +7,6 @@ class ContentPiece {
 }
 
 enum ContentType {
-  icon,
   code,
   markdown,
   text

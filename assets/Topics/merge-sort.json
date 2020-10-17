@@ -1,0 +1,13 @@
+{
+    "title": "Merge Sort 2",
+    "icon": "sortAlphaDown",
+    "tabs": [
+        {
+            "file": "assets/Code/Algorythms/Merge Sort/merge-sort.hs",
+            "icon": "sort-amount-down"
+        },
+        {
+            "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+        }
+    ]
+}

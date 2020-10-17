@@ -24,7 +24,7 @@ class ContentPageState extends State<ContentPage> {
   void initState() {
     super.initState();
 
-    dataRetriever.getContent(widget.content.files, rootBundle).then((value) =>
+    dataRetriever.getContent(widget.content.resources, rootBundle).then((value) =>
       setState(() {
         data = value;
       })

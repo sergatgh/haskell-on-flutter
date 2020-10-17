@@ -10,7 +10,13 @@ class GetTopicsFromAssets extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
     var bundle = context.properties["bundle"] as AssetBundle;
-    context.properties["result"] = await this.getContents(bundle);
+
+    if (!context.properties.containsKey("result")) {
+      context.properties["result"] = List<ContentLink>();
+    }
+
+    (context.properties["result"] as List<ContentLink>)
+        .addAll(await this.getContents(bundle));
   }
 
   Future<List<ContentLink>> getContents(AssetBundle context) async {
@@ -22,7 +28,7 @@ class GetTopicsFromAssets extends AsyncProcessor {
 
       if (map.containsKey(key)) {
         var pageData = map[key];
-        pageData.files.add(file);
+        pageData.resources.add(ContentResource(ResourceType.file,file));
       } else {
         var pageData = await getContentLink(file);
         map.putIfAbsent(key, () => pageData);
@@ -34,7 +40,7 @@ class GetTopicsFromAssets extends AsyncProcessor {
 
   Future<ContentLink> getContentLink(String file) async {
     var result = ContentLink(
-        files: [file],
+        resources: [ContentResource(ResourceType.file, file)],
         icon: Icon(Icons.ac_unit),
         title: getName(file),
         category: getCategory(file));
@@ -54,7 +60,7 @@ class GetTopicsFromAssets extends AsyncProcessor {
         .where((String key) => key.endsWith('.hs'))
         .toList());
   }
-  
+
   String getName(String path) {
     String result;
 

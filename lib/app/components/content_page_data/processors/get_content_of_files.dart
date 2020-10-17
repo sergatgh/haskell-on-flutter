@@ -7,12 +7,12 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 class GetContentOfFiles extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    var files = context.properties["files"] as List<String>;
+    var resources = context.properties["resources"] as List<ContentResource>;
     var bundle = context.properties["bundle"] as AssetBundle;
 
     var contents = List<ContentData>();
-    for (var file in files) {
-      var content = await loadFromFile(bundle, file);
+    for (var file in resources) {
+      var content = await loadFromFile(bundle, file.link);
       contents.add(content);
     }
     context.properties["result"] = contents;

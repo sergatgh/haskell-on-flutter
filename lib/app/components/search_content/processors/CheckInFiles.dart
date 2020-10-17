@@ -18,7 +18,7 @@ class CheckContentInFiles extends AsyncProcessor {
   Future<String> linkContainsContent(
       AssetBundle context, ContentLink link, String content) async {
     var list = await Future.wait(
-        link.files.map((file) => context.loadString(Uri.decodeFull(file))));
+        link.resources.map((file) => context.loadString(Uri.decodeFull(file.link))));
 
     var text = list.firstWhere(
         (element) => element.toLowerCase().contains(content.toLowerCase()),
