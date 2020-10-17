@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
@@ -18,6 +20,6 @@ class GetContentOfFiles extends AsyncProcessor {
 
   Future<ContentData> loadFromFile(AssetBundle context, String file) async {
     var content = await context.loadString(Uri.decodeFull(file));
-    return ContentData(content: content);
+    return ContentData([ContentPiece(ContentType.code, content)]);
   }
 }

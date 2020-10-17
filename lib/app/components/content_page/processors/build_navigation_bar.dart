@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
+import 'package:icons_helper/icons_helper.dart';
 
 class BuildNavigationBar extends Processor {
   @override
@@ -12,16 +13,14 @@ class BuildNavigationBar extends Processor {
 
     if (contents.length > 1) {
       appBar = AppBar(
-        title: Text(title),
-        bottom: TabBar(
+          title: Text(title),
+          bottom: TabBar(
             tabs: buildNavigationBar(contents),
-            )
-        );
-    }
-    else {
+          ));
+    } else {
       appBar = AppBar(
         title: Text(title),
-        );
+      );
     }
 
     context.properties["appBar"] = appBar;
@@ -30,31 +29,34 @@ class BuildNavigationBar extends Processor {
   }
 
   List<Widget> buildNavigationBar(List<ContentData> contentTabsData) {
-      var icons = [
-        Icons.looks_one,
-        Icons.looks_two,
-        Icons.looks_3,
-        Icons.looks_4,
-        Icons.looks_5,
-        Icons.looks_6,
-      ];
-      var tabs = <Tab>[];
+    var icons = [
+      Icons.looks_one,
+      Icons.looks_two,
+      Icons.looks_3,
+      Icons.looks_4,
+      Icons.looks_5,
+      Icons.looks_6,
+    ];
+    var tabs = <Tab>[];
 
-      for (var i = 0; i < contentTabsData.length; i++) {
-        var icon = contentTabsData[i].icon;
-        if (icon == null) {
+    for (var i = 0; i < contentTabsData.length; i++) {
+      var icon = contentTabsData[i].getIcon();
+
+      var tabIcon = Icon(Icons.library_books);
+      if (icon == null) {
           if (i < icons.length) {
-            icon = Icon(icons[i]);
-          } else {
-            icon = Icon(Icons.library_books);
+            tabIcon = Icon(icons[i]);
           }
-        }
-
-        tabs.add(Tab(
-          icon: icon,
-        ));
+      }
+      else {
+        tabIcon = Icon(getIconUsingPrefix(name: icon));
       }
 
-      return tabs; 
+      tabs.add(Tab(
+        icon: tabIcon,
+      ));
+    }
+
+    return tabs;
   }
 }
