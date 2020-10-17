@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/base/pipeline.dart';
-import 'package:haskell_is_beautiful/base/context.dart';
+import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class WrapTab extends Processor {
   @override

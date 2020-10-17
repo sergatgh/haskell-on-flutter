@@ -16,10 +16,8 @@ class ContentPage extends StatefulWidget {
 }
 
 class ContentPageState extends State<ContentPage> {
-  Widget page = Container(
-    width: 0,
-    height: 0,
-  );
+  BuildContentPage builder = BuildContentPage();
+  List<ContentData> data = [];
 
   @override
   void initState() {
@@ -27,17 +25,15 @@ class ContentPageState extends State<ContentPage> {
 
     Future.wait(widget.content.files
             .map((file) => widget.contentManager.getContent(rootBundle, file)))
-        .then(
-            (value) => BuildContentPage().getPage(value, widget.content.title))
         .then((value) {
       setState(() {
-        page = value;
+        data = value;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return page;
+    return builder.getPage(data, widget.content.title);
   }
 }
