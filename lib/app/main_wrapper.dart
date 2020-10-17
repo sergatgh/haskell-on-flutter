@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:haskell_is_beautiful/app/components/main_topics/get_topics.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
-  final ContentManager contentManager;
 
-  HaskellPocketBookApp(this.contentManager);
+  HaskellPocketBookApp();
 
   @override
   State<StatefulWidget> createState() {
@@ -17,13 +17,14 @@ class HaskellPocketBookApp extends StatefulWidget {
 
 class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   
+  GetTopics topicRetriever = GetTopics();
   List<ContentLink> contentPageData = [];
 
   @override
   void initState() {
     super.initState();
 
-    widget.contentManager.getContents(rootBundle).then((value) {
+    topicRetriever.getTopics(rootBundle).then((value) {
       setState(() {
         contentPageData = value;
       });
@@ -53,7 +54,6 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   Widget getHome() {
       return CategoryListPage(
         categories: this.contentPageData,
-        contentManager: this.widget.contentManager,
       );
   }
 
@@ -61,7 +61,6 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     var map = Map.fromIterable(this.contentPageData,
         key: (c) => c.title as String,
         value: (c) => (BuildContext context) => ContentPage(
-              contentManager: widget.contentManager,
               content: c,
             ));
 

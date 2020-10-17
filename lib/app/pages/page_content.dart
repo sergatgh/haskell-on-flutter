@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/components/content_page/build_content_page.dart';
+import 'package:haskell_is_beautiful/app/components/content_page_data/get_content_page_data.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {
-  final ContentManager contentManager;
   final ContentLink content;
 
-  ContentPage({this.contentManager, this.content});
+  ContentPage({this.content});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,19 +17,18 @@ class ContentPage extends StatefulWidget {
 
 class ContentPageState extends State<ContentPage> {
   BuildContentPage builder = BuildContentPage();
+  GetContentPageData dataRetriever = GetContentPageData();
   List<ContentData> data = [];
 
   @override
   void initState() {
     super.initState();
 
-    Future.wait(widget.content.files
-            .map((file) => widget.contentManager.getContent(rootBundle, file)))
-        .then((value) {
+    dataRetriever.getContent(widget.content.files, rootBundle).then((value) =>
       setState(() {
         data = value;
-      });
-    });
+      })
+    );
   }
 
   @override

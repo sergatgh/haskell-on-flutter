@@ -1,23 +1,16 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:haskell_is_beautiful/base/pipelines.dart';
 import 'package:recase/recase.dart';
 
-class ContentManager {
-  Future<List<String>> getCodeFiles(AssetBundle context) async {
-    // >> To get paths you need these 2 lines
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
-
-    final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
-    // >> To get paths you need these 2 lines
-
-    return Future.value(manifestMap.keys
-        .where((String key) => key.contains('Code/'))
-        .where((String key) => key.endsWith('.hs'))
-        .toList());
+class GetTopicsFromAssets extends AsyncProcessor {
+  @override
+  Future safeExecute(PipelineContext context) async {
+    var bundle = context.properties["bundle"] as AssetBundle;
+    context.properties["result"] = await this.getContents(bundle);
   }
 
   Future<List<ContentLink>> getContents(AssetBundle context) async {
@@ -39,13 +32,6 @@ class ContentManager {
     return Future.value(map.values.toList());
   }
 
-  Future<ContentData> getContent(AssetBundle context, String file) async {
-    var content = await context.loadString(Uri.decodeFull(file));
-    var result = ContentData(content: content);
-
-    return Future.value(result);
-  }
-
   Future<ContentLink> getContentLink(String file) async {
     var result = ContentLink(
         files: [file],
@@ -56,30 +42,19 @@ class ContentManager {
     return Future.value(result);
   }
 
-  Future<String> linkContainsContent(
-      AssetBundle context, ContentLink link, String content) async {
-    var list = await Future.wait(
-        link.files.map((file) => context.loadString(Uri.decodeFull(file))));
+  Future<List<String>> getCodeFiles(AssetBundle context) async {
+    // >> To get paths you need these 2 lines
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
 
-    var text = list.firstWhere(
-        (element) => element.toLowerCase().contains(content.toLowerCase()),
-        orElse: () => null);
-    if (text == null) return null;
-    LineSplitter lineSplitter = LineSplitter();
-    var lines = lineSplitter.convert(text);
+    final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
+    // >> To get paths you need these 2 lines
 
-    var index = lines.indexWhere(
-        (element) => element.toLowerCase().contains(content.toLowerCase()));
-
-    var minLine = 0;
-    var maxLine = lines.length - 1;
-
-    maxLine = min(maxLine, index + 2);
-    minLine = max(minLine, index - 2);
-
-    return lines.sublist(minLine, maxLine).join('\n');
+    return Future.value(manifestMap.keys
+        .where((String key) => key.contains('Code/'))
+        .where((String key) => key.endsWith('.hs'))
+        .toList());
   }
-
+  
   String getName(String path) {
     String result;
 

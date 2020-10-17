@@ -6,9 +6,8 @@ import 'category_list_view.dart';
 
 class ContentSearch extends SearchDelegate<ContentLink> {
   final List<ContentLink> categories;
-  final ContentManager contentManager;
 
-  ContentSearch({this.categories, this.contentManager});
+  ContentSearch({this.categories});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -30,7 +29,6 @@ class ContentSearch extends SearchDelegate<ContentLink> {
     return SearchResultsWithCode(
       categories: this.categories,
       query: this.query,
-      contentManager: this.contentManager,
     );
   }
 

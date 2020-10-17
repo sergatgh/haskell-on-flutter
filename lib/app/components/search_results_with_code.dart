@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
+import 'package:haskell_is_beautiful/app/components/search_content/content_finder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class SearchResultsWithCode extends StatefulWidget {
   final List<ContentLink> categories;
   final String query;
-  final ContentManager contentManager;
 
-  SearchResultsWithCode({this.categories, this.query, this.contentManager})
+  SearchResultsWithCode({this.categories, this.query})
       : super(key: ObjectKey(query));
 
   @override
@@ -18,6 +18,7 @@ class SearchResultsWithCode extends StatefulWidget {
 }
 
 class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
+  ContentFinder contentFinder = ContentFinder();
   List<ContentSearchLink> searchResults = [];
   bool resultsAreMissing = false;
 
@@ -34,8 +35,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   }
 
   Future<bool> search(ContentLink item, String query) {
-    return widget.contentManager
-        .linkContainsContent(rootBundle, item, query)
+    return contentFinder.checkContent(rootBundle, item, query)
         .then((value) {
       if (value?.isEmpty ?? true) {
         if (item.title.toLowerCase().contains(query) ||
