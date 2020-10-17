@@ -1,3 +1,5 @@
+import 'package:haskell_is_beautiful/base/context.dart';
+
 class Pipeline {
   final List<Processor> processors;
 
@@ -41,9 +43,3 @@ abstract class Processor {
   }
 }
 
-class PipelineContext {
-  final List<String> messages = [];
-  final Map<String, Object> properties = Map<String, Object>();
-
-  PipelineContext();
-}
