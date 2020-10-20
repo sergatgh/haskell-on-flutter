@@ -24,11 +24,11 @@ class ContentPageState extends State<ContentPage> {
   void initState() {
     super.initState();
 
-    dataRetriever.getContent(widget.content.resources, rootBundle).then((value) =>
-      setState(() {
-        data = value;
-      })
-    );
+    Future.wait(widget.content.resources
+            .map((e) => dataRetriever.getContent(e, rootBundle)))
+        .then((value) => setState(() {
+              data = value;
+            }));
   }
 
   @override

@@ -20,6 +20,7 @@ class ContentResource {
 }
 
 enum ResourceType {
+  json,
   file,
   link
 }

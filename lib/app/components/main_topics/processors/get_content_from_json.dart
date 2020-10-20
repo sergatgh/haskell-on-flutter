@@ -27,14 +27,15 @@ class GetTopicsFromJson extends AsyncProcessor {
       var json = await getJson(file);
       var key = getName(json);
 
-      var pageData = await getContentLink(json);
+      var pageData = await getContentLink(file, json);
       map.putIfAbsent(key, () => pageData);
     }
 
     return Future.value(map.values.toList());
   }
 
-  Future<ContentLink> getContentLink(Map<String, dynamic> file) async {
+  Future<ContentLink> getContentLink(
+      String fileName, Map<String, dynamic> file) async {
     var result = ContentLink(
         resources: getFiles(file),
         icon: Icon(getIconUsingPrefix(name: getIcon(file))),
@@ -71,10 +72,17 @@ class GetTopicsFromJson extends AsyncProcessor {
   }
 
   List<ContentResource> getFiles(Map<String, dynamic> json) {
-    return (json["tabs"] as List)
-        .map((x) => ContentResource(ResourceType.file, x["file"] as String,
-            icon: x["icon"] as String))
-        .toList();
+    return (json["tabs"] as List).map((x) {
+      var resource = x["resource"] as Map<String, dynamic>;
+      if (resource.containsKey("file")) {
+        return ContentResource(ResourceType.file, resource["file"] as String,
+            icon: x["icon"] as String);
+      }
+      if (resource.containsKey("url")) {
+        return ContentResource(ResourceType.link, resource["url"] as String,
+            icon: x["icon"] as String);
+      }
+    }).toList();
   }
 
   String getName(Map<String, dynamic> json) {

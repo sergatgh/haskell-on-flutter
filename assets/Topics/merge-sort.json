@@ -3,11 +3,15 @@
     "icon": "sortAlphaDown",
     "tabs": [
         {
-            "file": "assets/Code/Algorythms/Merge Sort/merge-sort.hs",
-            "icon": "sort-amount-down"
+            "icon": "sort-amount-down",
+            "resource": {
+                "url": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
+            }
         },
         {
-            "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+            "resource": {
+                "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+            }
         }
     ]
 }

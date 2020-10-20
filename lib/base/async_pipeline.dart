@@ -18,16 +18,19 @@ class AsyncPipeline {
   }
 }
 
-abstract class AsyncProcessor {
-  Future safeExecute(PipelineContext context);
-  bool safeCondition(PipelineContext context) {
+abstract class TypedAsyncProcessor<T> {
+  Future safeExecute(T context);
+  bool safeCondition(T context) {
     return true;
   }
 
-  Future execute(PipelineContext context) async {
+  Future execute(T context) async {
     if (this.safeCondition(context)) {
       await this.safeExecute(context);
     }
   }
+}
+
+abstract class AsyncProcessor extends TypedAsyncProcessor<PipelineContext> {
 }
 
