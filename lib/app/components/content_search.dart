@@ -4,8 +4,8 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 
 import 'category_list_view.dart';
 
-class ContentSearch extends SearchDelegate<ContentLink> {
-  final List<ContentLink> categories;
+class ContentSearch extends SearchDelegate<ContentContainer> {
+  final ContentContainer categories;
 
   ContentSearch({this.categories});
 
@@ -35,7 +35,7 @@ class ContentSearch extends SearchDelegate<ContentLink> {
   @override
   Widget buildSuggestions(BuildContext context) {
     var list = this
-        .categories
+        .categories.resources
         .where((element) =>
             element.title.toLowerCase().contains(query.toLowerCase()) ||
             element.category.toLowerCase().contains(query.toLowerCase()))

@@ -5,9 +5,10 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
 import 'package:haskell_is_beautiful/app/components/search_content/content_finder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:icons_helper/icons_helper.dart';
 
 class SearchResultsWithCode extends StatefulWidget {
-  final List<ContentLink> categories;
+  final ContentContainer categories;
   final String query;
 
   SearchResultsWithCode({this.categories, this.query})
@@ -26,7 +27,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   void initState() {
     super.initState();
     var query = widget.query.toLowerCase();
-    Future.wait(widget.categories.map((e) => search(e, query))).then((value) {
+    Future.wait(widget.categories.resources.map((e) => search(e, query))).then((value) {
       if (value.any((element) => element)) return;
       setState(() {
         resultsAreMissing = true;
@@ -34,7 +35,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
     });
   }
 
-  Future<bool> search(ContentLink item, String query) {
+  Future<bool> search(ContentResource item, String query) {
     return contentFinder.checkContent(rootBundle, item, query)
         .then((value) {
       if (value?.isEmpty ?? true) {
@@ -85,7 +86,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   Widget buildLink(BuildContext context, ContentSearchLink content) {
     var linkDescription = ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        leading: content.icon,
+        leading: Icon(getIconUsingPrefix(name: content.icon)),
         title: Text(content.title),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {

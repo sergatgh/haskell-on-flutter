@@ -5,7 +5,7 @@ import 'package:haskell_is_beautiful/app/components/content_page_data/get_conten
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {
-  final ContentLink content;
+  final ContentResource content;
 
   ContentPage({this.content});
 
@@ -24,8 +24,7 @@ class ContentPageState extends State<ContentPage> {
   void initState() {
     super.initState();
 
-    Future.wait(widget.content.resources
-            .map((e) => dataRetriever.getContent(e, rootBundle)))
+      dataRetriever.getContent(widget.content, rootBundle)
         .then((value) => setState(() {
               data = value;
             }));

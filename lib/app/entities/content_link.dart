@@ -1,26 +1,16 @@
-import 'package:flutter/widgets.dart';
-
-class ContentLink {
-
-  final Icon icon;
-  final String title;
+class ContentContainer {
   final List<ContentResource> resources;
-  String category;
 
-  ContentLink({this.icon, this.title, this.resources, this.category = "Other"});
+  ContentContainer({this.resources});
 
 }
 
+// JSON category
 class ContentResource {
   final String icon;
-  final ResourceType resourceType;
-  final String link;
+  final String title;
+  final String category;
+  final List<dynamic> data;
 
-  ContentResource(this.resourceType, this.link, {this.icon});
-}
-
-enum ResourceType {
-  json,
-  file,
-  link
+  ContentResource(this.data, this.title, this.icon, {this.category = "Other"});
 }

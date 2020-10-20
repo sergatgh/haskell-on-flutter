@@ -5,23 +5,23 @@ import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
-class GetContentOfLink extends AsyncProcessor {
+class GetContentFromLink extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    var resource = context.properties["resources"] as ContentResource;
+    var resource = context.properties["piece"] as dynamic;
     var bundle = context.properties["bundle"] as AssetBundle;
 
-    var content = await loadFromUrl(bundle, resource.link);
+    var content = await loadFromUrl(bundle, resource["url"]);
     context.properties["result"] = content;
   }
 
   @override
   bool safeCondition(PipelineContext context) {
-    var resource = context.properties["resources"] as ContentResource;
-    return resource.resourceType == ResourceType.link;
+    var resource = context.properties["piece"] as dynamic;
+    return resource["type"] == "remote-code";
   }
 
-  Future<ContentData> loadFromUrl(AssetBundle context, String url) async {
+  Future<ContentPiece> loadFromUrl(AssetBundle context, String url) async {
     var content = "";
     await Future.wait([
       new HttpClient()
@@ -32,6 +32,6 @@ class GetContentOfLink extends AsyncProcessor {
                 content = data;
               }).asFuture())
     ]);
-    return ContentData([ContentPiece(ContentType.code, content)]);
+    return ContentPiece(ContentType.code, content);
   }
 }

@@ -18,7 +18,7 @@ class HaskellPocketBookApp extends StatefulWidget {
 class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   
   GetTopics topicRetriever = GetTopics();
-  List<ContentLink> contentPageData = [];
+  ContentContainer contentPageData;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   }
 
   Map<String, Widget Function(BuildContext)> getRoutes() {
-    var map = Map.fromIterable(this.contentPageData,
+    var map = Map.fromIterable(this.contentPageData == null ? [] : this.contentPageData.resources,
         key: (c) => c.title as String,
         value: (c) => (BuildContext context) => ContentPage(
               content: c,

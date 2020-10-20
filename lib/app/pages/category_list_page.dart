@@ -5,7 +5,7 @@ import 'package:haskell_is_beautiful/app/components/content_search.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
 
 class CategoryListPage extends StatelessWidget {
-  final List<ContentLink> categories;
+  final ContentContainer categories;
 
   CategoryListPage({this.categories});
 
@@ -19,7 +19,10 @@ class CategoryListPage extends StatelessWidget {
   }
 
   Widget buildListView(BuildContext context) {
-    return CategoryListView(categories: this.categories);
+    if (this.categories == null || this.categories.resources == null) {
+      return CategoryListView(categories: [],);
+    }
+    return CategoryListView(categories: this.categories.resources);
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {

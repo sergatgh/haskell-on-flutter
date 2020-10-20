@@ -1,4 +1,5 @@
 
+// Element on the tab
 class ContentPiece {
   final ContentType type;
   final String data;

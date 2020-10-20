@@ -4,14 +4,20 @@
     "tabs": [
         {
             "icon": "sort-amount-down",
-            "resource": {
-                "url": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
-            }
+            "content": [
+                {
+                    "type": "remote-code",
+                    "url": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
+                }
+            ]
         },
         {
-            "resource": {
-                "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
-            }
+            "content": [
+                {
+                    "type": "asset-code",
+                    "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+                }
+            ]
         }
     ]
 }

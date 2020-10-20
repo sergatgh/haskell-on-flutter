@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:icons_helper/icons_helper.dart';
 
 class CategoryListView extends StatelessWidget {
-  final List<ContentLink> categories;
+  final List<ContentResource> categories;
 
   CategoryListView({this.categories});
 
@@ -12,9 +13,9 @@ class CategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupedListView(
       elements: this.categories,
-      groupBy: (element) => element.category,
+      groupBy: (ContentResource element) => element.category ?? "Other",
       groupSeparatorBuilder: _buildGroupSeparator,
-      itemBuilder: (context, element) => buildLink(context, element),
+      itemBuilder: (context, ContentResource element) => buildLink(context, element),
       order: GroupedListOrder.ASC,
     );
   }
@@ -30,7 +31,7 @@ class CategoryListView extends StatelessWidget {
     );
   }
 
-  Widget buildLink(BuildContext context, ContentLink content) {
+  Widget buildLink(BuildContext context, ContentResource content) {
     return Card(
       elevation: 8.0,
       shape: RoundedRectangleBorder(
@@ -41,7 +42,7 @@ class CategoryListView extends StatelessWidget {
         child: ListTile(
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            leading: content.icon,
+            leading: Icon(getIconUsingPrefix(name: content.icon)),
             title: Text(content.title),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {

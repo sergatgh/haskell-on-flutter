@@ -40,15 +40,14 @@ class BuildNavigationBar extends Processor {
     var tabs = <Tab>[];
 
     for (var i = 0; i < contentTabsData.length; i++) {
-      var icon;
+      var icon = contentTabsData[i].icon;
 
       var tabIcon = Icon(Icons.library_books);
-      if (icon == null) {
-          if (i < icons.length) {
-            tabIcon = Icon(icons[i]);
-          }
-      }
-      else {
+      if (icon == null || getIconUsingPrefix(name: icon) == null) {
+        if (i < icons.length) {
+          tabIcon = Icon(icons[i]);
+        }
+      } else {
         tabIcon = Icon(getIconUsingPrefix(name: icon));
       }
 
