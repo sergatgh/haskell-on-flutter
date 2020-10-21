@@ -10,18 +10,25 @@ class GetTopicsFromAssets extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var bundle = context.properties["bundle"] as AssetBundle;
 
-    context.properties["result"] = await this.getContent(bundle);
+    var categories = await this.getContent(bundle);
+    if (!context.properties.containsKey("result")) {
+      context.properties["result"] = categories;
+    }
+    else {
+      (context.properties["result"] as List<Category>).addAll(categories);
+    }
+
   }
 
-  Future<ContentContainer> getContent(AssetBundle context) async {
+  Future<List<Category>> getContent(AssetBundle context) async {
     var files = await getMetadataFiles(context);
-    var map = ContentContainer(resources: []);
+    var map = <Category>[];
 
     for (var file in files) {
       var json = await getJson(file);
       var key = getName(json);
 
-      map.resources.add(Category(json["tabs"], key, getIcon(json),
+      map.add(Category(json["tabs"], key, getIcon(json),
           topic: getCategory(json)));
     }
 

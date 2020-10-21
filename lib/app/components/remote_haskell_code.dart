@@ -36,20 +36,16 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
 
     if (uri == null) {
       error = "Link [$url] has an incorrect value.";
-    } 
-    else if (!uri.hasScheme) {
+    } else if (!uri.hasScheme) {
       error = "Link [$url] should have a scheme like [https].";
-    }
-    else {
-      await Future.wait([
-        new HttpClient()
-            .getUrl(uri)
-            .then((HttpClientRequest request) => request.close())
-            .then((HttpClientResponse response) =>
-                response.transform(new Utf8Decoder()).listen((data) {
-                  content = data;
-                }).asFuture())
-      ]);
+    } else {
+      await new HttpClient()
+          .getUrl(uri)
+          .then((HttpClientRequest request) => request.close())
+          .then((HttpClientResponse response) =>
+              response.transform(new Utf8Decoder()).listen((data) {
+                content = data;
+              }).asFuture());
     }
     return content.trim();
   }

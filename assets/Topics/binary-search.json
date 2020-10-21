@@ -7,8 +7,8 @@
             "icon": "searchLocation",
             "content": [
                 {
-                    "type": "asset-code",
-                    "data": "assets/Code/Algorythms/binary-search.hs"
+                    "type": "remote-code",
+                    "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Algorythms/binary-search.hs"
                 }
             ]
         }
