@@ -21,19 +21,20 @@ class GetTopicsFromAssets extends AsyncProcessor {
       var json = await getJson(file);
       var key = getName(json);
 
-      map.resources.add(Category(json["tabs"], key, getIcon(json)));
+      map.resources.add(Category(json["tabs"], key, getIcon(json),
+          topic: getCategory(json)));
     }
 
     return map;
   }
 
- String getIcon(Map<String, dynamic> json) {
-   if (json.containsKey("icon")) {
-     return json["icon"];
-   }
+  String getIcon(Map<String, dynamic> json) {
+    if (json.containsKey("icon")) {
+      return json["icon"];
+    }
 
-   return "ac_unit";
- }
+    return "ac_unit";
+  }
 
   Future<Map<String, dynamic>> getJson(String file) async {
     final content = await rootBundle.loadString(file);

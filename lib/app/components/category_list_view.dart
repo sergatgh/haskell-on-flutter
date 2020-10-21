@@ -13,7 +13,7 @@ class CategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupedListView(
       elements: this.categories,
-      groupBy: (Category element) => element.category ?? "Other",
+      groupBy: (Category element) => element.topic ?? "Other",
       groupSeparatorBuilder: _buildGroupSeparator,
       itemBuilder: (context, Category element) => buildLink(context, element),
       order: GroupedListOrder.ASC,

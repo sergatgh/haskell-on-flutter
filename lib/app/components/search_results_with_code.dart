@@ -40,7 +40,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
         .then((value) {
       if (value?.isEmpty ?? true) {
         if (item.title.toLowerCase().contains(query) ||
-            item.category.toLowerCase().contains(query)) {
+            item.topic.toLowerCase().contains(query)) {
           setState(() => searchResults.add(ContentSearchLink(item, null)));
           return true;
         }
@@ -65,7 +65,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
 
     return GroupedListView(
       elements: this.searchResults,
-      groupBy: (element) => element.category,
+      groupBy: (element) => element.topic,
       groupSeparatorBuilder: _buildGroupSeparator,
       itemBuilder: (context, element) => buildLink(context, element),
       order: GroupedListOrder.ASC,

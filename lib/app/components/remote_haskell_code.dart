@@ -21,7 +21,10 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
   void initState() {
     super.initState();
 
-    loadFromUrl(widget.url).then((value) => setState(() => this.code = value));
+    if (widget.url != null) {
+      loadFromUrl(widget.url)
+          .then((value) => setState(() => this.code = value));
+    }
   }
 
   Future<String> loadFromUrl(String url) async {
@@ -35,16 +38,21 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
                 content = data;
               }).asFuture())
     ]);
-    return content;
+    return content.trim();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.url == null || widget.url.isEmpty) {
+      return Center(child: Text("Specified URL is empty."),);
+    }
+
     if (code.isEmpty) {
       return Center(child: Container(child: CircularProgressIndicator()));
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         HaskellCode(code),
         ShareButton(content: code),

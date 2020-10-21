@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:haskell_is_beautiful/app/components/remote_haskell_code.dart';
 import 'package:haskell_is_beautiful/app/entities/content_piece.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
@@ -16,6 +14,6 @@ class AddRemoteCode extends Processor {
   bool safeCondition(PipelineContext context) {
     final content = context.properties["data"] as ContentPiece;
 
-    return content.type == ContentType.linked_code;
+    return content.type == "remote-code";
   }
 }

@@ -9,6 +9,6 @@ class ContentSearchLink {
   ContentSearchLink._internal(this.icon, this.title, this.category, this.codeSample);
   
   factory ContentSearchLink(Category link, String code) {
-    return ContentSearchLink._internal(link.icon, link.title, link.category, code);
+    return ContentSearchLink._internal(link.icon, link.title, link.topic, code);
   }
 }

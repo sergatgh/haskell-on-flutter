@@ -38,7 +38,7 @@ class ContentSearch extends SearchDelegate<ContentContainer> {
         .categories.resources
         .where((element) =>
             element.title.toLowerCase().contains(query.toLowerCase()) ||
-            element.category.toLowerCase().contains(query.toLowerCase()))
+            element.topic.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     if (list.isEmpty) {

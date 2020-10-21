@@ -1,13 +1,14 @@
 {
-    "title": "Merge Sort 2",
+    "title": "Merge Sort",
     "icon": "sortAlphaDown",
+    "category": "Algorythms",
     "tabs": [
         {
             "icon": "sort-amount-down",
             "content": [
                 {
                     "type": "remote-code",
-                    "url": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
+                    "data": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
                 }
             ]
         },
@@ -15,7 +16,7 @@
             "content": [
                 {
                     "type": "asset-code",
-                    "file": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+                    "data": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
                 }
             ]
         }

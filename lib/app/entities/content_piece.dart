@@ -1,15 +1,8 @@
 
 // Element on the tab
 class ContentPiece {
-  final ContentType type;
+  final String type;
   final String data;
 
   ContentPiece(this.type, this.data);
-}
-
-enum ContentType {
-  code,
-  markdown,
-  text,
-  linked_code,
 }
