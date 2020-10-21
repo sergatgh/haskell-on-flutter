@@ -1,10 +1,10 @@
 {
     "title": "Hello world",
-    "icon": "handSparkles",
+    "icon": "handPaper",
     "category": "Beginning",
     "tabs": [
         {
-            "icon": "handSparkles",
+            "icon": "handPaper",
             "content": [
                 {
                     "type": "remote-code",

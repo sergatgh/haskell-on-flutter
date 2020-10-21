@@ -27,6 +27,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/Code/Algorythms/
-    - assets/Code/Algorythms/Merge Sort/
+#  assets:
+#    - assets/Code/Algorythms/
