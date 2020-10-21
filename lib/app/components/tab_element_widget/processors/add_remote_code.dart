@@ -16,6 +16,6 @@ class AddRemoteCode extends Processor {
   bool safeCondition(PipelineContext context) {
     final content = context.properties["data"] as ContentPiece;
 
-    return content.type == ContentType.code;
+    return content.type == ContentType.linked_code;
   }
 }

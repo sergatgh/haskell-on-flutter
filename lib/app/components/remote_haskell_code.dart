@@ -41,7 +41,7 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
   @override
   Widget build(BuildContext context) {
     if (code.isEmpty) {
-      return Container(child: CircularProgressIndicator());
+      return Center(child: Container(child: CircularProgressIndicator()));
     }
 
     return Column(
