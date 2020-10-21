@@ -10,5 +10,6 @@ class ContentPiece {
 enum ContentType {
   code,
   markdown,
-  text
+  text,
+  linked_code,
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/content_page/build_content_page.dart';
-import 'package:haskell_is_beautiful/app/components/content_page_data/get_content_page_data.dart';
+import 'package:haskell_is_beautiful/app/components/get_widget_for_page_definition/build_content_page.dart';
+import 'package:haskell_is_beautiful/app/components/get_category_content/get_page_definition.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class ContentPage extends StatefulWidget {
 
 class ContentPageState extends State<ContentPage> {
   BuildContentPage pageWidgetBuilder = BuildContentPage();
-  GetContentPageData dataRetriever = GetContentPageData();
+  GetCategoryContent dataRetriever = GetCategoryContent();
   PageDefinition pageDefinition = PageDefinition("Loading...", []);
 
   @override

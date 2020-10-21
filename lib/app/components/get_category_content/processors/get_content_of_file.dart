@@ -12,12 +12,12 @@ class GetContentOfFile extends AsyncProcessor {
     var bundle = context.properties["bundle"] as AssetBundle;
 
     var result = List<TabDefinition>();
-    for (var tabJson in category.data) {
+    for (var tabJson in category.json) {
       var pieces = List<ContentPiece>();
       for (var piece in tabJson["content"]) {
         pieces.add(await pieceBuilder.getContent(piece, bundle));
       }
-      var tab = TabDefinition(pieces,icon: tabJson["icon"]);
+      var tab = TabDefinition(pieces, icon: tabJson["icon"]);
       result.add(tab);
     }
     context.properties["result"] = PageDefinition(category.title, result);

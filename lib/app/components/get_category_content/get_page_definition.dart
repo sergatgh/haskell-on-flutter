@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/content_page_data/processors/get_content_of_file.dart';
+import 'package:haskell_is_beautiful/app/components/get_category_content/processors/get_content_of_file.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
-class GetContentPageData extends AsyncPipeline {
-  GetContentPageData() : super([
+class GetCategoryContent extends AsyncPipeline {
+  GetCategoryContent() : super([
     GetContentOfFile()
   ]);
 
