@@ -6,11 +6,11 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 class BuildTabs extends Processor {
   @override
   Object safeExecute(PipelineContext context) {
-    var contents = context.properties["contents"] as List<ContentData>;
+    var contents = context.properties["contents"] as PageDefinition;
 
     var tabs = <Widget>[];
 
-    for (var value in contents) {
+    for (var value in contents.tabs) {
       var tab = BuildTabPipeline().getTab(value);
       tabs.add(tab);
     }

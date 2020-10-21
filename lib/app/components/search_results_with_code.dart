@@ -35,7 +35,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
     });
   }
 
-  Future<bool> search(ContentResource item, String query) {
+  Future<bool> search(Category item, String query) {
     return contentFinder.checkContent(rootBundle, item, query)
         .then((value) {
       if (value?.isEmpty ?? true) {

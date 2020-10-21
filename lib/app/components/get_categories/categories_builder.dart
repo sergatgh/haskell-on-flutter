@@ -1,11 +1,11 @@
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/main_topics/processors/get_content_from_json.dart';
-import 'package:haskell_is_beautiful/app/components/main_topics/processors/get_topics_from_assets.dart';
+import 'package:haskell_is_beautiful/app/components/get_categories/processors/get_topics_from_assets.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
-class GetTopics extends AsyncPipeline {
-  GetTopics() : super([
+// Retrieves ContentContainer
+class CategoriesBuilder extends AsyncPipeline {
+  CategoriesBuilder() : super([
     GetTopicsFromAssets()
   ]);
 

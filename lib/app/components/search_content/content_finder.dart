@@ -8,7 +8,7 @@ class ContentFinder extends AsyncPipeline {
     CheckContentInFiles()
   ]);
 
-  Future<String> checkContent(AssetBundle assetBundle, ContentResource link, String searchContent) async {
+  Future<String> checkContent(AssetBundle assetBundle, Category link, String searchContent) async {
     final context = PipelineContext();
     context.properties.addAll({ "bundle": assetBundle, "link": link, "search": searchContent });
     await this.runProcessors(context);

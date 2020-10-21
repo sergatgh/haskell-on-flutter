@@ -6,16 +6,16 @@ import 'package:icons_helper/icons_helper.dart';
 class BuildNavigationBar extends Processor {
   @override
   Object safeExecute(PipelineContext context) {
-    var contents = context.properties["contents"] as List<ContentData>;
-    var title = context.properties["title"] as String;
+    var pageDefinition = context.properties["contents"] as PageDefinition;
+    var title = pageDefinition.title;
 
     AppBar appBar;
 
-    if (contents.length > 1) {
+    if (pageDefinition.tabs.length > 1) {
       appBar = AppBar(
           title: Text(title),
           bottom: TabBar(
-            tabs: buildNavigationBar(contents),
+            tabs: buildNavigationBar(pageDefinition),
           ));
     } else {
       appBar = AppBar(
@@ -28,7 +28,7 @@ class BuildNavigationBar extends Processor {
     return null;
   }
 
-  List<Widget> buildNavigationBar(List<ContentData> contentTabsData) {
+  List<Widget> buildNavigationBar(PageDefinition pageDefinition) {
     var icons = [
       Icons.looks_one,
       Icons.looks_two,
@@ -39,8 +39,8 @@ class BuildNavigationBar extends Processor {
     ];
     var tabs = <Tab>[];
 
-    for (var i = 0; i < contentTabsData.length; i++) {
-      var icon = contentTabsData[i].icon;
+    for (var i = 0; i < pageDefinition.tabs.length; i++) {
+      var icon = pageDefinition.tabs[i].icon;
 
       var tabIcon = Icon(Icons.library_books);
       if (icon == null || getIconUsingPrefix(name: icon) == null) {

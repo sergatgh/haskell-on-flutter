@@ -8,10 +8,10 @@ class GetContentPageData extends AsyncPipeline {
     GetContentOfFile()
   ]);
 
-  Future<List<ContentData>> getContent(ContentResource resource, AssetBundle assetBundle) async {
+  Future<PageDefinition> getContent(Category resource, AssetBundle assetBundle) async {
     final context = PipelineContext();
     context.properties.addAll({ "resource": resource, "bundle": assetBundle });
     await this.runProcessors(context);
-    return context.properties["result"] as List<ContentData>;
+    return context.properties["result"] as PageDefinition;
   }
 }

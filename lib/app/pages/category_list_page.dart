@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/components/category_list_view.dart';
 import 'package:haskell_is_beautiful/app/components/content_search.dart';
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/entities/content_container.dart';
 
 class CategoryListPage extends StatelessWidget {
   final ContentContainer categories;

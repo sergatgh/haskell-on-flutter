@@ -1,4 +1,4 @@
-import 'package:haskell_is_beautiful/app/entities/content_link.dart';
+import 'package:haskell_is_beautiful/app/entities/category.dart';
 
 class ContentSearchLink {
   final String icon;
@@ -8,7 +8,7 @@ class ContentSearchLink {
 
   ContentSearchLink._internal(this.icon, this.title, this.category, this.codeSample);
   
-  factory ContentSearchLink(ContentResource link, String code) {
+  factory ContentSearchLink(Category link, String code) {
     return ContentSearchLink._internal(link.icon, link.title, link.category, code);
   }
 }

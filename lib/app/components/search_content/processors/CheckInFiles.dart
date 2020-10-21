@@ -6,14 +6,14 @@ class CheckContentInFiles extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
     var bundle = context.properties["bundle"] as AssetBundle;
-    var link = context.properties["link"] as ContentResource;
+    var link = context.properties["link"] as Category;
     var content = context.properties["search"] as String;
 
     context.properties["result"] = await linkContainsContent(bundle, link, content);
   }
 
   Future<String> linkContainsContent(
-      AssetBundle context, ContentResource link, String content) async {
+      AssetBundle context, Category link, String content) async {
     // var list = await Future.wait(
     //     link.resources.where((element) => element.resourceType == ResourceType.file).map((file) => context.loadString(Uri.decodeFull(file.link))));
 

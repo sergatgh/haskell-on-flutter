@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
@@ -22,7 +21,7 @@ class GetTopicsFromAssets extends AsyncProcessor {
       var json = await getJson(file);
       var key = getName(json);
 
-      map.resources.add(ContentResource(json["tabs"], key, getIcon(json)));
+      map.resources.add(Category(json["tabs"], key, getIcon(json)));
     }
 
     return map;

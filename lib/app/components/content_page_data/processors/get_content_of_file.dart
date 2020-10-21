@@ -8,18 +8,18 @@ class GetContentOfFile extends AsyncProcessor {
 
   @override
   Future safeExecute(PipelineContext context) async {
-    var resource = context.properties["resource"] as ContentResource;
+    var category = context.properties["resource"] as Category;
     var bundle = context.properties["bundle"] as AssetBundle;
 
-    var result = List<ContentData>();
-    for (var tabJson in resource.data) {
+    var result = List<TabDefinition>();
+    for (var tabJson in category.data) {
       var pieces = List<ContentPiece>();
       for (var piece in tabJson["content"]) {
         pieces.add(await pieceBuilder.getContent(piece, bundle));
       }
-      var tab = ContentData(pieces,icon: tabJson["icon"]);
+      var tab = TabDefinition(pieces,icon: tabJson["icon"]);
       result.add(tab);
     }
-    context.properties["result"] = result;
+    context.properties["result"] = PageDefinition(category.title, result);
   }
 }

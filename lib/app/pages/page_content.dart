@@ -5,7 +5,7 @@ import 'package:haskell_is_beautiful/app/components/content_page_data/get_conten
 import 'package:haskell_is_beautiful/app/entities.dart';
 
 class ContentPage extends StatefulWidget {
-  final ContentResource content;
+  final Category content;
 
   ContentPage({this.content});
 
@@ -16,9 +16,9 @@ class ContentPage extends StatefulWidget {
 }
 
 class ContentPageState extends State<ContentPage> {
-  BuildContentPage builder = BuildContentPage();
+  BuildContentPage pageWidgetBuilder = BuildContentPage();
   GetContentPageData dataRetriever = GetContentPageData();
-  List<ContentData> data = [];
+  PageDefinition pageDefinition = PageDefinition("Loading...", []);
 
   @override
   void initState() {
@@ -26,12 +26,12 @@ class ContentPageState extends State<ContentPage> {
 
       dataRetriever.getContent(widget.content, rootBundle)
         .then((value) => setState(() {
-              data = value;
+              pageDefinition = value;
             }));
   }
 
   @override
   Widget build(BuildContext context) {
-    return builder.getPage(data, widget.content.title);
+    return pageWidgetBuilder.getPage(pageDefinition);
   }
 }

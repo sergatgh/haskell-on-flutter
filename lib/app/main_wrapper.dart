@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/main_topics/get_topics.dart';
+import 'package:haskell_is_beautiful/app/components/get_categories/categories_builder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 
@@ -17,7 +17,7 @@ class HaskellPocketBookApp extends StatefulWidget {
 
 class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   
-  GetTopics topicRetriever = GetTopics();
+  CategoriesBuilder topicRetriever = CategoriesBuilder();
   ContentContainer contentPageData;
 
   @override
