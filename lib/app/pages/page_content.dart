@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/get_widget_for_page_definition/build_content_page.dart';
+import 'package:haskell_is_beautiful/app/components/page_widget/build_content_page.dart';
 import 'package:haskell_is_beautiful/app/components/get_category_content/get_page_definition.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 

@@ -16,6 +16,7 @@ class RemoteHaskellCode extends StatefulWidget {
 
 class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
   String code = "";
+  String error = "";
 
   @override
   void initState() {
@@ -24,27 +25,41 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
     if (widget.url != null) {
       loadFromUrl(widget.url)
           .then((value) => setState(() => this.code = value));
+    } else {
+      error = "Specified URL is empty.";
     }
   }
 
   Future<String> loadFromUrl(String url) async {
     var content = "";
-    await Future.wait([
-      new HttpClient()
-          .getUrl(Uri.parse(url))
-          .then((HttpClientRequest request) => request.close())
-          .then((HttpClientResponse response) =>
-              response.transform(new Utf8Decoder()).listen((data) {
-                content = data;
-              }).asFuture())
-    ]);
+    var uri = Uri.tryParse(url);
+
+    if (uri == null) {
+      error = "Link [$url] has an incorrect value.";
+    } 
+    else if (!uri.hasScheme) {
+      error = "Link [$url] should have a scheme like [https].";
+    }
+    else {
+      await Future.wait([
+        new HttpClient()
+            .getUrl(uri)
+            .then((HttpClientRequest request) => request.close())
+            .then((HttpClientResponse response) =>
+                response.transform(new Utf8Decoder()).listen((data) {
+                  content = data;
+                }).asFuture())
+      ]);
+    }
     return content.trim();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.url == null || widget.url.isEmpty) {
-      return Center(child: Text("Specified URL is empty."),);
+    if (error.isNotEmpty) {
+      return Center(
+        child: Text(error),
+      );
     }
 
     if (code.isEmpty) {

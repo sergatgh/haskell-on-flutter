@@ -7,8 +7,8 @@
             "icon": "sort-amount-down",
             "content": [
                 {
-                    "type": "remote-code",
-                    "data": "https://raw.githubusercontent.com/haskell/vector/master/Setup.hs"
+                    "type": "asset-code",
+                    "data": "assets/Code/Algorythms/Merge Sort/merge-sort.hs"
                 }
             ]
         },

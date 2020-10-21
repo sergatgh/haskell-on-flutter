@@ -1,0 +1,16 @@
+{
+    "title": "Binary Search",
+    "icon": "searchLocation",
+    "category": "Algorythms",
+    "tabs": [
+        {
+            "icon": "searchLocation",
+            "content": [
+                {
+                    "type": "asset-code",
+                    "data": "assets/Code/Algorythms/binary-search.hs"
+                }
+            ]
+        }
+    ]
+}
