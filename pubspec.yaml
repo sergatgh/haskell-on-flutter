@@ -28,10 +28,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/Code/
-    - assets/Code/Analogies/
-    - assets/Code/Analogies/Analogies to C# Lists/
     - assets/Code/Algorythms/
     - assets/Code/Algorythms/Merge Sort/
-    - assets/Code/Beginning/
-    - assets/Topics/

@@ -46,9 +46,9 @@ class GetTopicsFromGithub extends AsyncProcessor {
     await new HttpClient()
         .getUrl(uri)
         .then((HttpClientRequest request) => request.close())
-        .then((HttpClientResponse response) =>
-            response.transform(new Utf8Decoder()).listen((data) {
-              content = data;
+        .then((HttpClientResponse response) async =>
+            await response.transform(new Utf8Decoder()).listen((data) {
+              content += data;
             }).asFuture());
     return jsonDecode(content);
   }
@@ -61,9 +61,9 @@ class GetTopicsFromGithub extends AsyncProcessor {
     await new HttpClient()
         .getUrl(uri)
         .then((HttpClientRequest request) => request.close())
-        .then((HttpClientResponse response) =>
-            response.transform(new Utf8Decoder()).listen((data) {
-              content = data;
+        .then((HttpClientResponse response) async =>
+            await response.transform(new Utf8Decoder()).listen((data) {
+              content += data;
             }).asFuture());
 
     if (content.contains("Not Found")) {
@@ -71,15 +71,18 @@ class GetTopicsFromGithub extends AsyncProcessor {
     }
 
     var json = jsonDecode(content);
-    if (!(json is List<Map<String, dynamic>>)) {
+    if (!(json is List)) {
       return [];
     }
 
-    List<Map<String, dynamic>> jsonFiles = json;
-    return jsonFiles
-        .map((e) => e.containsKey("download_url") ? e["download_url"] : null)
-        .where((element) => element != null)
-        .toList();
+    List<Map<String, dynamic>> jsonFiles =
+        (json as List).cast<Map<String, dynamic>>();
+
+    var collection = jsonFiles
+        .map((e) => e.containsKey("download_url") ? e["download_url"] as String : null)
+        .where((element) => element != null);
+
+    return collection.toList();
   }
 
   String getName(Map<String, dynamic> json) {

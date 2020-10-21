@@ -44,7 +44,7 @@ class _RemoteHaskellCodeState extends State<RemoteHaskellCode> {
           .then((HttpClientRequest request) => request.close())
           .then((HttpClientResponse response) =>
               response.transform(new Utf8Decoder()).listen((data) {
-                content = data;
+                content += data;
               }).asFuture());
     }
     return content.trim();
