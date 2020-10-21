@@ -13,11 +13,9 @@ class GetTopicsFromAssets extends AsyncProcessor {
     var categories = await this.getContent(bundle);
     if (!context.properties.containsKey("result")) {
       context.properties["result"] = categories;
-    }
-    else {
+    } else {
       (context.properties["result"] as List<Category>).addAll(categories);
     }
-
   }
 
   Future<List<Category>> getContent(AssetBundle context) async {
@@ -25,11 +23,14 @@ class GetTopicsFromAssets extends AsyncProcessor {
     var map = <Category>[];
 
     for (var file in files) {
-      var json = await getJson(file);
-      var key = getName(json);
+      var jsonFiles = await getJsonFiles(file);
 
-      map.add(Category(json["tabs"], key, getIcon(json),
-          topic: getCategory(json)));
+      for (var json in jsonFiles) {
+        var key = getName(json);
+
+        map.add(Category(json["tabs"], key, getIcon(json),
+            topic: getCategory(json)));
+      }
     }
 
     return map;
@@ -43,9 +44,15 @@ class GetTopicsFromAssets extends AsyncProcessor {
     return "ac_unit";
   }
 
-  Future<Map<String, dynamic>> getJson(String file) async {
+  Future<List<Map<String, dynamic>>> getJsonFiles(String file) async {
     final content = await rootBundle.loadString(file);
-    return jsonDecode(content);
+    var json = jsonDecode(content);
+
+    if (json is List) {
+      return json.cast<Map<String, dynamic>>().toList();
+    } else {
+      return [json];
+    }
   }
 
   Future<List<String>> getMetadataFiles(AssetBundle context) async {

@@ -1,0 +1,34 @@
+[
+    {
+        "title": "Hello world",
+        "icon": "handPaper",
+        "category": "Beginning",
+        "tabs": [
+            {
+                "icon": "handPaper",
+                "content": [
+                    {
+                        "type": "remote-code",
+                        "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Beginning/hello-world.hs"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Count File Lines",
+        "icon": "handPaper",
+        "category": "Beginning",
+        "tabs": [
+            {
+                "icon": "handPaper",
+                "content": [
+                    {
+                        "type": "remote-code",
+                        "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Beginning/count-file-lines.hs"
+                    }
+                ]
+            }
+        ]
+    }
+]

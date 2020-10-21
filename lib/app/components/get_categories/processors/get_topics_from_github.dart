@@ -21,11 +21,14 @@ class GetTopicsFromGithub extends AsyncProcessor {
     var map = <Category>[];
 
     for (var file in files) {
-      var json = await getJson(file);
-      var key = getName(json);
+      var jsonFiles = await getJsonFiles(file);
 
-      map.add(
-          Category(json["tabs"], key, getIcon(json), topic: getCategory(json)));
+      for (var json in jsonFiles) {
+        var key = getName(json);
+
+        map.add(
+            Category(json["tabs"], key, getIcon(json), topic: getCategory(json))); 
+      }
     }
 
     return map;
@@ -39,7 +42,7 @@ class GetTopicsFromGithub extends AsyncProcessor {
     return "ac_unit";
   }
 
-  Future<Map<String, dynamic>> getJson(String url) async {
+  Future<List<Map<String, dynamic>>> getJsonFiles(String url) async {
     var content = "";
     var uri = Uri.parse(url);
 
@@ -50,7 +53,13 @@ class GetTopicsFromGithub extends AsyncProcessor {
             await response.transform(new Utf8Decoder()).listen((data) {
               content += data;
             }).asFuture());
-    return jsonDecode(content);
+    var json = jsonDecode(content);
+
+    if (json is List) {
+      return json.cast<Map<String, dynamic>>().toList();
+    } else {
+      return [json];
+    }
   }
 
   Future<List<String>> getMetadataFiles() async {

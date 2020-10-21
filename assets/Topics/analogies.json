@@ -1,0 +1,25 @@
+{
+    "title": "Analogies To C# Lists",
+    "icon": "handPaper",
+    "category": "Analogies",
+    "tabs": [
+        {
+            "icon": "handPaper",
+            "content": [
+                {
+                    "type": "remote-code",
+                    "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Analogies/Analogies%20to%20C%23%20Lists/1-skip-take.hs"
+                }
+            ]
+        },
+        {
+            "icon": "handPaper",
+            "content": [
+                {
+                    "type": "remote-code",
+                    "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Analogies/Analogies%20to%20C%23%20Lists/3-easy-maps.hs"
+                }
+            ]
+        }
+    ]
+}
