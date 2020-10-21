@@ -7,16 +7,16 @@
             "icon": "sort-amount-down",
             "content": [
                 {
-                    "type": "asset-code",
-                    "data": "assets/Code/Algorythms/Merge Sort/merge-sort.hs"
+                    "type": "remote-code",
+                    "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Algorythms/Merge%20Sort/merge-sort.hs"
                 }
             ]
         },
         {
             "content": [
                 {
-                    "type": "asset-code",
-                    "data": "assets/Code/Algorythms/Merge Sort/merge-sort2.hs"
+                    "type": "remote-code",
+                    "data": "https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Algorythms/Merge%20Sort/merge-sort2.hs"
                 }
             ]
         }
