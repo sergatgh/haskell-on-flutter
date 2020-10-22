@@ -17,17 +17,17 @@ class GetTopicsFromGithub extends AsyncProcessor {
   }
 
   Future<List<Category>> getContent() async {
-    var files = await getMetadataFiles();
+    var links = await getMetadataFiles();
     var map = <Category>[];
 
-    for (var file in files) {
-      var jsonFiles = await getJsonFiles(file);
+    for (var link in links) {
+      var jsonFiles = await getJsonFiles(link);
 
       for (var json in jsonFiles) {
         var key = getName(json);
 
         map.add(
-            Category(json["tabs"], key, getIcon(json), topic: getCategory(json))); 
+            JsonCategory(json["tabs"], key, getIcon(json), topic: getCategory(json))); 
       }
     }
 

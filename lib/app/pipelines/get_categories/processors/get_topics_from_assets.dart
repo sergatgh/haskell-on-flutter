@@ -28,7 +28,7 @@ class GetTopicsFromAssets extends AsyncProcessor {
       for (var json in jsonFiles) {
         var key = getName(json);
 
-        map.add(Category(json["tabs"], key, getIcon(json),
+        map.add(JsonCategory(json["tabs"], key, getIcon(json),
             topic: getCategory(json)));
       }
     }

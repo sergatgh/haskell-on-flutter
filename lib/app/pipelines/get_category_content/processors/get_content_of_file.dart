@@ -5,7 +5,7 @@ class GetContentOfFile extends AsyncProcessor {
 
   @override
   Future safeExecute(PipelineContext context) async {
-    var category = context.properties["resource"] as Category;
+    var category = context.properties["resource"] as JsonCategory;
 
     var result = List<TabDefinition>();
     for (var tabJson in category.json) {
@@ -17,5 +17,10 @@ class GetContentOfFile extends AsyncProcessor {
       result.add(tab);
     }
     context.properties["result"] = PageDefinition(category.title, result);
+  }
+
+  @override
+  bool safeCondition(PipelineContext context) {
+    return context.properties["resource"] is JsonCategory;
   }
 }

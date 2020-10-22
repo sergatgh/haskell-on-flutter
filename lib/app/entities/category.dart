@@ -3,7 +3,11 @@ class Category {
   final String icon;
   final String title;
   final String topic;
-  final List<dynamic> json;
 
-  Category(this.json, this.title, this.icon, {this.topic = "Other"});
+  Category(this.title, this.icon, {this.topic = "Other"});
+}
+
+class JsonCategory extends Category {
+  final List<dynamic> json;
+  JsonCategory(this.json, String title, String icon, {String topic = "Other"}) : super(title, icon, topic: topic);
 }
