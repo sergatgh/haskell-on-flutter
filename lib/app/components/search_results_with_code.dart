@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
-import 'package:haskell_is_beautiful/app/components/search_content/content_finder.dart';
+import 'package:haskell_is_beautiful/app/pipelines/search_content/content_finder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:icons_helper/icons_helper.dart';
 

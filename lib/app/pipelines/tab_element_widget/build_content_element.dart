@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/components/tab_element_widget/processors/add_code.dart';
-import 'package:haskell_is_beautiful/app/components/tab_element_widget/processors/add_remote_code.dart';
+import 'package:haskell_is_beautiful/app/pipelines/tab_element_widget/processors/add_code.dart';
+import 'package:haskell_is_beautiful/app/pipelines/tab_element_widget/processors/add_remote_code.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipeline.dart';
 

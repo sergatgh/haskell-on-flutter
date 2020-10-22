@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/get_categories/processors/get_topics_from_assets.dart';
-import 'package:haskell_is_beautiful/app/components/get_categories/processors/get_topics_from_github.dart';
-import 'package:haskell_is_beautiful/app/components/get_categories/processors/wrap_categories.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/get_topics_from_assets.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/get_topics_from_github.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/wrap_categories.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
