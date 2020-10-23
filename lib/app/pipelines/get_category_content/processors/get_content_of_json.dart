@@ -1,7 +1,7 @@
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
-class GetContentOfFile extends AsyncProcessor {
+class GetContentOfJson extends AsyncProcessor {
 
   @override
   Future safeExecute(PipelineContext context) async {

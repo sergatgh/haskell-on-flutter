@@ -1,11 +1,12 @@
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_category_content/processors/get_content_of_file.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_category_content/processors/get_content_of_json.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_category_content/processors/get_content_of_sql.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class GetCategoryContent extends AsyncPipeline {
   GetCategoryContent() : super([
-    GetContentOfFile()
+    GetContentOfJson(), GetContentOfSql()
   ]);
 
   Future<PageDefinition> getContent(Category resource, AssetBundle assetBundle) async {
