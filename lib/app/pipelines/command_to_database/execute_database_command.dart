@@ -9,7 +9,7 @@ class ExecuteDatabaseCommand extends AsyncPipeline {
   static final ExecuteDatabaseCommand instance = new ExecuteDatabaseCommand();
 
   ExecuteDatabaseCommand() : super([
-    GetDatabase(), ExecuteCommand(), CloseDatabase()
+    GetDatabase(), ExecuteCommand(), /*CloseDatabase()*/
   ]);
 
   Future executeCommand(Future Function(Database) func) async {

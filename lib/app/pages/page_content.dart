@@ -17,14 +17,14 @@ class ContentPage extends StatefulWidget {
 
 class ContentPageState extends State<ContentPage> {
   BuildContentPage pageWidgetBuilder = BuildContentPage();
-  GetCategoryContent dataRetriever = GetCategoryContent();
+  GetCategoryContent dataRetriever = GetCategoryContent.instance;
   PageDefinition pageDefinition = PageDefinition("Loading...", []);
 
   @override
   void initState() {
     super.initState();
 
-      dataRetriever.getContent(widget.content, rootBundle)
+      dataRetriever.getContent(widget.content)
         .then((value) => setState(() {
               pageDefinition = value;
             }));

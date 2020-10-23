@@ -6,8 +6,9 @@ import 'package:haskell_is_beautiful/app/entities/content_container.dart';
 
 class CategoryListPage extends StatelessWidget {
   final ContentContainer categories;
+  final Function refresh;
 
-  CategoryListPage({this.categories});
+  CategoryListPage({this.categories, this.refresh});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,12 @@ class CategoryListPage extends StatelessWidget {
     return AppBar(
       title: Text('Haskell is Awesome'),
       actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.system_update_alt),
+          onPressed: () {
+            this.refresh?.call();
+          }
+        ),
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {

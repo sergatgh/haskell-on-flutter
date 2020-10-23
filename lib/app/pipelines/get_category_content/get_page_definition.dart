@@ -5,13 +5,15 @@ import 'package:haskell_is_beautiful/app/pipelines/get_category_content/processo
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class GetCategoryContent extends AsyncPipeline {
+  static final GetCategoryContent instance = GetCategoryContent();
+
   GetCategoryContent() : super([
     GetContentOfJson(), GetContentOfSql()
   ]);
 
-  Future<PageDefinition> getContent(Category resource, AssetBundle assetBundle) async {
+  Future<PageDefinition> getContent(Category resource) async {
     final context = PipelineContext();
-    context.properties.addAll({ "resource": resource, "bundle": assetBundle });
+    context.properties.addAll({ "resource": resource });
     await this.runProcessors(context);
     return context.properties["result"] as PageDefinition;
   }
