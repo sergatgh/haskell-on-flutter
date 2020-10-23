@@ -23,21 +23,28 @@ class PutContentInDatabase extends AsyncProcessor {
 
   Future addToDatabase(Category category, PageDefinition pageDefinition) async {
     var script = (Database db) async {
-      await db.transaction((txn) async {
-        var categoryId = await txn.insert('category', {
-          'category': category.topic,
-          'title': category.title,
-          'icon': category.icon
-        });
-        for (var tab in pageDefinition.tabs) {
-          var tabId =
-              await txn.insert('tab', {'owner': categoryId, 'icon': tab.icon});
-          for (var piece in tab.pieces) {
-            await txn.insert('piece',
-                {'owner': tabId, 'type': piece.type, 'data': piece.data});
+      var count = Sqflite.firstIntValue(await db.rawQuery(
+          'SELECT COUNT(*) from category where category.category = ? AND category.title = ?',
+          [category.topic, category.title]));
+
+      if (count == 0) {
+        await db.transaction((txn) async {
+          var categoryId = await txn.insert('category', {
+            'category': category.topic,
+            'title': category.title,
+            'icon': category.icon,
+            'owner': 1,
+          });
+          for (var tab in pageDefinition.tabs) {
+            var tabId = await txn
+                .insert('tab', {'owner': categoryId, 'icon': tab.icon});
+            for (var piece in tab.pieces) {
+              await txn.insert('piece',
+                  {'owner': tabId, 'type': piece.type, 'data': piece.data});
+            }
           }
-        }
-      });
+        });
+      }
     };
 
     await ExecuteDatabaseCommand.instance.executeCommand(script);

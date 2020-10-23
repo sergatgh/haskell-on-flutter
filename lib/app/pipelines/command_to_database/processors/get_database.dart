@@ -16,14 +16,18 @@ class GetDatabase extends AsyncProcessor {
         await db.transaction((txn) async {
           await txn.execute("PRAGMA foreign_keys = ON;");
           await txn.execute(
-              "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, category VARCHAR(128) NOT NULL, title VARCHAR(256) NOT NULL,icon VARCHAR(32));");
+              "CREATE TABLE provider (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(128) NOT NULL, link VARCHAR(1024) NOT NULL, icon VARCHAR(32));");
+          await txn.execute(
+              "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, category VARCHAR(128) NOT NULL, title VARCHAR(256) NOT NULL,icon VARCHAR(32), owner int, FOREIGN KEY(owner) REFERENCES provider(id) ON DELETE CASCADE);");
           await txn.execute(
               "CREATE TABLE tab (id INTEGER PRIMARY KEY AUTOINCREMENT, icon VARCHAR(64), owner int, FOREIGN KEY(owner) REFERENCES category(id) ON DELETE CASCADE);");
           await txn.execute(
               "CREATE TABLE piece (id INTEGER PRIMARY KEY AUTOINCREMENT, type VARCHAR(16), data TEXT, owner int, FOREIGN KEY(owner) REFERENCES tab(id) ON DELETE CASCADE);");
 
           await txn.rawInsert(
-              "INSERT INTO category VALUES (1, 'Algorythms', 'Merge Sort', 'sortAlphaDown');");
+              "INSERT INTO provider VALUES (1, 'Witty Lion', 'https://api.github.com/repositories/221082746/contents/assets/Topics', 'sortAlphaDown');");
+          await txn.rawInsert(
+              "INSERT INTO category VALUES (1, 'Algorythms', 'Merge Sort', 'sortAlphaDown', 1);");
           await txn.rawInsert(
               "INSERT INTO tab VALUES (1, 'sort-amount-down', 1);");
           await txn.rawInsert(
