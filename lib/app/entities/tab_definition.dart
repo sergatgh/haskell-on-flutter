@@ -7,10 +7,15 @@ class TabDefinition {
 
   TabDefinition(this.pieces, {this.icon});
 
-  List<String> getAll(String contentType) {
+  Iterable<String> getAll(String contentType) {
+    return getAllPieces(contentType)
+        .map((e) => e.data)
+        .toList();
+  }
+
+  Iterable<ContentPiece> getAllPieces(String contentType) {
     return pieces
         .where((element) => element.type == contentType)
-        .map((e) => e.data)
         .toList();
   }
 

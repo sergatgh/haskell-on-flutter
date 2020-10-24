@@ -18,7 +18,7 @@ class CheckContentInFiles extends AsyncProcessor {
     var page = await GetCategoryContent.instance.getContent(category);
     var text = page.tabs
         .map((tab) => tab.getAll('raw-code'))
-        .reduce((list1, list2) => list1 + list2)
+        .reduce((list1, list2) => list1.followedBy(list2))
         .firstWhere(
             (code) => code.toLowerCase().contains(content.toLowerCase()),
             orElse: () => null);
