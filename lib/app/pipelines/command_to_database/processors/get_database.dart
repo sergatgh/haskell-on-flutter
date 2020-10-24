@@ -26,16 +26,7 @@ class GetDatabase extends AsyncProcessor {
 
           await txn.rawInsert(
               "INSERT INTO provider VALUES (1, 'Witty Lion', 'https://api.github.com/repositories/221082746/contents/assets/Topics', 'sortAlphaDown');");
-          await txn.rawInsert(
-              "INSERT INTO category VALUES (1, 'Algorythms', 'Merge Sort', 'sortAlphaDown', 1);");
-          await txn.rawInsert(
-              "INSERT INTO tab VALUES (1, 'sort-amount-down', 1);");
-          await txn.rawInsert(
-              "INSERT INTO piece VALUES (1, 'remote-code', 'https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Algorythms/Merge%20Sort/merge-sort.hs', 1);");
-          await txn.rawInsert(
-              "INSERT INTO tab VALUES (2, '', 1);");
-          await txn.rawInsert(
-              "INSERT INTO piece VALUES (2, 'remote-code', 'https://raw.githubusercontent.com/SergAtGitHub/Haskell-on-Flutter/master/assets/Code/Algorythms/Merge%20Sort/merge-sort2.hs', 2);");
+
         });
       }
     });

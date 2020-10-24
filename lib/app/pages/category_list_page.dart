@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/components/category_list_view.dart';
 import 'package:haskell_is_beautiful/app/components/content_search.dart';
 import 'package:haskell_is_beautiful/app/entities/content_container.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CategoryListPage extends StatelessWidget {
   final ContentContainer categories;
@@ -30,6 +31,15 @@ class CategoryListPage extends StatelessWidget {
     return AppBar(
       title: Text('Haskell is Awesome'),
       actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.delete_forever),
+          onPressed: () {
+            getDatabasesPath()
+              .then((value) => value + '/content.db')
+              .then((value) => deleteDatabase(value))
+              .then((value) => this.refresh?.call());
+          },
+        ),
         IconButton(
           icon: Icon(Icons.system_update_alt),
           onPressed: () {

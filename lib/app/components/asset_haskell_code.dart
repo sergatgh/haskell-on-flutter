@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
+import 'package:haskell_is_beautiful/app/components/haskell_code_piece.dart';
 import 'package:haskell_is_beautiful/app/components/share_button.dart';
 
 class AssetHaskellCode extends StatefulWidget {
@@ -32,12 +33,6 @@ class _AssetHaskellCodeState extends State<AssetHaskellCode> {
       return Center(child: Container(child: CircularProgressIndicator()));
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        HaskellCode(code),
-        ShareButton(content: code),
-      ],
-    );
+    return HaskellCodePiece(code);
   }
 }
