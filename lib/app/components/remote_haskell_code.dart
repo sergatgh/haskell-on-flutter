@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code_piece.dart';
-import 'package:haskell_is_beautiful/app/components/share_button.dart';
 
 class RemoteHaskellCode extends StatefulWidget {
   final String url;

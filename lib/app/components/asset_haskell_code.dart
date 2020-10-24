@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code_piece.dart';
-import 'package:haskell_is_beautiful/app/components/share_button.dart';
 
 class AssetHaskellCode extends StatefulWidget {
   final String file;

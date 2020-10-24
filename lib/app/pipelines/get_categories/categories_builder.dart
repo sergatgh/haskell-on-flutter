@@ -12,9 +12,8 @@ class CategoriesBuilder extends AsyncPipeline {
   ]);
 
   Future<ContentContainer> getTopics(AssetBundle assetBundle) async {
-    final context = PipelineContext();
-    context.properties.addAll({ "bundle": assetBundle });
+    final context = PipelineContext(props: { "bundle": assetBundle });
     await this.runProcessors(context);
-    return context.properties["result"] as ContentContainer;
+    return context.getResult<ContentContainer>();
   }
 }

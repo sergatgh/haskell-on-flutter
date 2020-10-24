@@ -11,10 +11,9 @@ class GetCategoryContent extends AsyncPipeline {
     GetContentOfJson(), GetContentOfSql(), ReplaceRemoteCode()
   ]);
 
-  Future<PageDefinition> getContent(Category resource) async {
-    final context = PipelineContext();
-    context.properties.addAll({ "resource": resource });
+  Future<PageDefinition> getContent(Category category) async {
+    final context = PipelineContext(props: { "resource": category });
     await this.runProcessors(context);
-    return context.properties["result"] as PageDefinition;
+    return context.getResult<PageDefinition>();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
 import 'package:haskell_is_beautiful/app/pipelines/search_content/content_finder.dart';
@@ -36,7 +35,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   }
 
   Future<bool> search(Category item, String query) {
-    return contentFinder.checkContent(rootBundle, item, query)
+    return contentFinder.checkContent(item, query)
         .then((value) {
       if (value?.isEmpty ?? true) {
         if (item.title.toLowerCase().contains(query) ||
@@ -65,7 +64,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
 
     return GroupedListView(
       elements: this.searchResults,
-      groupBy: (element) => element.topic,
+      groupBy: (element) => element.category,
       groupSeparatorBuilder: _buildGroupSeparator,
       itemBuilder: (context, element) => buildLink(context, element),
       order: GroupedListOrder.ASC,
