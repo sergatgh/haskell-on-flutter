@@ -51,7 +51,7 @@ class GetDatabase extends AsyncProcessor {
           await txn.rawInsert(
               """
               INSERT INTO provider VALUES (
-                1, 'Witty Lion', 'https://api.github.com/repositories/221082746/contents/assets/Topics', 'sortAlphaDown');
+                1, 'Witty Lion', 'https://api.github.com/repositories/307157040/contents/Topics', 'wolfPackBattalion');
               """);
 
         });
