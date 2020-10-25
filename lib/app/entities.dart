@@ -4,3 +4,4 @@ export 'entities/content_search_link.dart';
 export 'entities/content_piece.dart';
 export 'entities/category.dart';
 export 'entities/page_definition.dart';
+export 'entities/provider.dart';
