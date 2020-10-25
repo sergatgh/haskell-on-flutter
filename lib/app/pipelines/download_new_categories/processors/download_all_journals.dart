@@ -12,8 +12,11 @@ class DownloadAllJournals extends AsyncProcessor {
       var results = await db.query('provider');
       providers = results.map((e) => Provider.fromMap(e)).toList();
     });
+
+    List<Future> downloads = [];
     for (var provider in providers) {
-      await DownloadJournal.instance.download(provider);
+      downloads.add(DownloadJournal.instance.download(provider));
     }
+    await Future.wait(downloads);
   }
 }

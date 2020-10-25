@@ -8,7 +8,7 @@ import 'package:recase/recase.dart';
 class GetTopicsFromGithub extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    var categories = await this.getContent(context.get<Provider>('provider'));
+    var categories = await this.getContent(context.get<List<String>>('links'));
     if (!context.properties.containsKey("result")) {
       context.properties["result"] = categories;
     } else {
@@ -16,8 +16,7 @@ class GetTopicsFromGithub extends AsyncProcessor {
     }
   }
 
-  Future<List<Category>> getContent(Provider provider) async {
-    var links = await getMetadataFiles(provider.link);
+  Future<List<Category>> getContent(List<String> links) async {
     var map = <Category>[];
 
     for (var link in links) {
@@ -60,37 +59,6 @@ class GetTopicsFromGithub extends AsyncProcessor {
     } else {
       return [json];
     }
-  }
-
-  Future<List<String>> getMetadataFiles(String url) async {
-    var content = "";
-    var uri = Uri.parse(url);
-
-    await new HttpClient()
-        .getUrl(uri)
-        .then((HttpClientRequest request) => request.close())
-        .then((HttpClientResponse response) async =>
-            await response.transform(new Utf8Decoder()).listen((data) {
-              content += data;
-            }).asFuture());
-
-    if (content.contains("Not Found")) {
-      return [];
-    }
-
-    var json = jsonDecode(content);
-    if (!(json is List)) {
-      return [];
-    }
-
-    List<Map<String, dynamic>> jsonFiles =
-        (json as List).cast<Map<String, dynamic>>();
-
-    var collection = jsonFiles
-        .map((e) => e.containsKey("download_url") ? e["download_url"] as String : null)
-        .where((element) => element != null);
-
-    return collection.toList();
   }
 
   String getName(Map<String, dynamic> json) {
