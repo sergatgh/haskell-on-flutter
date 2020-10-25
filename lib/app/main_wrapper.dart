@@ -19,6 +19,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   CategoriesBuilder topicRetriever = CategoriesBuilder();
   DownloadCategories downloader = DownloadCategories.instance;
   ContentContainer contentPageData;
+  bool loading = false;
 
   @override
   void initState() {
@@ -49,7 +50,8 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
 
   void loadDataFromWeb() {
     setState(() {
-      this.contentPageData = ContentContainer();
+      this.contentPageData = null;
+      this.loading = true;
     });
 
     downloader
@@ -57,11 +59,13 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
         .then((_) => topicRetriever.getTopics(rootBundle))
         .then((value) => setState(() {
               this.contentPageData = value;
+              this.loading = false;
             }));
   }
 
   Widget getHome() {
     return CategoryListPage(
+      loading: loading,
       categories: this.contentPageData,
       refresh: this.loadDataFromWeb,
     );

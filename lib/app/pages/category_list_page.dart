@@ -8,16 +8,26 @@ import 'package:sqflite/sqflite.dart';
 class CategoryListPage extends StatelessWidget {
   final ContentContainer categories;
   final Function refresh;
+  final bool loading;
 
-  CategoryListPage({this.categories, this.refresh});
+  CategoryListPage({this.categories, this.refresh, this.loading});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: buildAppBar(context),
-      body: buildListView(context),
+      body: buildBody(context),
     );
+  }
+
+  Widget buildBody(BuildContext context) {
+    if (this.loading) {
+      return Center(child: Container(child: CircularProgressIndicator()));
+    }
+    else {
+      return buildListView(context);
+    }
   }
 
   Widget buildListView(BuildContext context) {
