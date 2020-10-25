@@ -33,6 +33,7 @@ class CategoryListView extends StatelessWidget {
 
   Widget buildLink(BuildContext context, Category content) {
     return Card(
+      color: /*content.hasUpdates() ? Colors.blue[50] :*/ Colors.white,
       elevation: 8.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),

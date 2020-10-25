@@ -23,11 +23,14 @@ class PutContentInDatabase extends AsyncProcessor {
 
   Future addToDatabase(Category category, PageDefinition pageDefinition) async {
     var script = (Database db) async {
-      var count = Sqflite.firstIntValue(await db.rawQuery(
-          'SELECT COUNT(*) from category where category.category = ? AND category.title = ?',
-          [category.topic, category.title]));
+      var dbCategoryList = await db.rawQuery("""
+          SELECT * 
+          FROM category 
+          WHERE category.category = ? AND category.title = ?
+          LIMIT 1
+          """, [category.topic, category.title]);
 
-      if (count == 0) {
+      if (dbCategoryList.isEmpty) {
         await db.transaction((txn) async {
           var categoryId = await txn.insert('category', {
             'category': category.topic,
@@ -44,6 +47,23 @@ class PutContentInDatabase extends AsyncProcessor {
             }
           }
         });
+      } else {
+        final found = SqlCategory.fromMap(dbCategoryList[0]);
+        if (found.updated
+                ?.add(Duration(days: 1))
+                ?.isBefore(DateTime.now()) ??
+            true) {
+          db.update(
+              'category',
+              {
+                'category': category.topic,
+                'title': category.title,
+                'icon': category.icon,
+                'updated': DateTime.now().toString()
+              },
+              where: 'id = ?',
+              whereArgs: [found.id]);
+        }
       }
     };
 

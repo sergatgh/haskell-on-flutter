@@ -6,7 +6,7 @@ import "package:collection/collection.dart";
 class GetContentOfSql extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    var category = context.properties["resource"] as SqlCategory;
+    var category = context.get<SqlCategory>("resource");
     var categoryContent = await getSqlContent(category.id);
     var tabGroups = groupBy(categoryContent, (obj) => obj["id"]);
 
@@ -34,6 +34,6 @@ class GetContentOfSql extends AsyncProcessor {
 
   @override
   bool safeCondition(PipelineContext context) {
-    return context.properties["resource"] is SqlCategory;
+    return context.has<SqlCategory>("resource");
   }
 }
