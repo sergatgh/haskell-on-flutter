@@ -6,8 +6,7 @@ class AsyncPipeline {
   AsyncPipeline(this.processors);
 
   Future execute(Map<String, Object> props) {
-    final context = PipelineContext();
-    context.properties.addAll(props);
+    final context = PipelineContext(props: props);
     return runProcessors(context);
   }
 

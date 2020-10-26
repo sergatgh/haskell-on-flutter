@@ -21,6 +21,6 @@ class AddMarkdown extends Processor {
   bool safeCondition(PipelineContext context) {
     final piece = context.get<ContentPiece>("data");
 
-    return piece != null && piece.type == "markdown";
+    return piece != null && piece.type == "raw-markdown";
   }
 }

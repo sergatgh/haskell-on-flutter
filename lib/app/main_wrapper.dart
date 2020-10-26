@@ -5,6 +5,7 @@ import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/downl
 import 'package:haskell_is_beautiful/app/pipelines/get_categories/categories_builder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_setting/settings.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   HaskellPocketBookApp();
@@ -25,7 +26,27 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   void initState() {
     super.initState();
 
-    topicRetriever.getTopics(rootBundle).then((value) {
+    Settings.lastUpdate().then((lastUpdate) {
+      if (lastUpdate == null) {
+        downloadTopics().then((_) => getTopics());
+      } else {
+        var date = DateTime.tryParse(lastUpdate);
+        if (date == null ||
+            date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+          downloadTopics().then((_) => getTopics());
+        } else {
+          getTopics();
+        }
+      }
+    });
+  }
+
+  Future downloadTopics() {
+    return downloader.download();
+  }
+
+  Future getTopics() {
+    return topicRetriever.getTopics(rootBundle).then((value) {
       setState(() {
         contentPageData = value;
       });
