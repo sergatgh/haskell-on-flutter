@@ -11,4 +11,9 @@ class WrapTab extends Processor {
     )];
     return null;
   }
+
+  @override
+  bool safeCondition(PipelineContext context) {
+    return context.has<bool>('wrap') && context.get<bool>('wrap');
+  }
 }

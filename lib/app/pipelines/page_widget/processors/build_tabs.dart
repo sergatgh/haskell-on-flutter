@@ -11,7 +11,7 @@ class BuildTabs extends Processor {
     var tabs = <Widget>[];
 
     for (var value in contents.tabs) {
-      var tab = BuildTabPipeline().getTab(value);
+      var tab = BuildTabPipeline.instance.getTab(value.pieces, wrap: true);
       tabs.add(tab);
     }
 

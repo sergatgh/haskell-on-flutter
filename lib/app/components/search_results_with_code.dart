@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
 import 'package:haskell_is_beautiful/app/pipelines/search_content/content_finder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:haskell_is_beautiful/app/pipelines/tab_widget/build_tab_pipeline.dart';
 import 'package:icons_helper/icons_helper.dart';
 
 class SearchResultsWithCode extends StatefulWidget {
@@ -26,7 +26,8 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   void initState() {
     super.initState();
     var query = widget.query.toLowerCase();
-    Future.wait(widget.categories.resources.map((e) => search(e, query))).then((value) {
+    Future.wait(widget.categories.resources.map((e) => search(e, query)))
+        .then((value) {
       if (value.any((element) => element)) return;
       setState(() {
         resultsAreMissing = true;
@@ -35,12 +36,11 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
   }
 
   Future<bool> search(Category item, String query) {
-    return contentFinder.checkContent(item, query)
-        .then((value) {
+    return contentFinder.checkContent(item, query).then((value) {
       if (value?.isEmpty ?? true) {
         if (item.title.toLowerCase().contains(query) ||
             item.topic.toLowerCase().contains(query)) {
-          setState(() => searchResults.add(ContentSearchLink(item, null)));
+          setState(() => searchResults.add(ContentSearchLink(item, [])));
           return true;
         }
       } else {
@@ -64,7 +64,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
 
     return GroupedListView(
       elements: this.searchResults,
-      groupBy: (element) => element.category,
+      groupBy: (element) => element.topic,
       groupSeparatorBuilder: _buildGroupSeparator,
       itemBuilder: (context, element) => buildLink(context, element),
       order: GroupedListOrder.ASC,
@@ -92,14 +92,14 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
           Navigator.of(context).pushNamed(content.title);
         });
 
-    var column = content.codeSample?.isEmpty ?? true
+    var column = content.foundContent.isEmpty ?? true
         ? linkDescription
         : Column(children: <Widget>[
             linkDescription,
             Container(
-                width: double.infinity,
+                width: double.maxFinite,
                 padding: const EdgeInsets.all(10.0),
-                child: HaskellCode(content.codeSample))
+                child: BuildTabPipeline.instance.getTab(content.foundContent, wrap: false))
           ]);
 
     return Card(
@@ -109,6 +109,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
       ),
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
+        width: double.maxFinite,
         child: column,
       ),
     );

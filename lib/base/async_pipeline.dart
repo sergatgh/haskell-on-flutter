@@ -5,12 +5,13 @@ class AsyncPipeline {
 
   AsyncPipeline(this.processors);
 
-  Future execute(Map<String, Object> props) {
+  Future<TResult> execute<TResult>(Map<String, Object> props) async {
     final context = PipelineContext(props: props);
-    return runProcessors(context);
+    await runProcessors(context);
+    return context.getResult<TResult>();
   }
 
-  Future runProcessors<T>(PipelineContext context) async {
+  Future runProcessors(PipelineContext context) async {
     for (var processor in this.processors) {
       await processor.execute(context);
     }

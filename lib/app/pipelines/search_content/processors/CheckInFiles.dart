@@ -14,28 +14,34 @@ class CheckContentInFiles extends AsyncProcessor {
     context.setResult(await linkContainsContent(link, content));
   }
 
-  Future<String> linkContainsContent(Category category, String content) async {
+  Future<List<ContentPiece>> linkContainsContent(
+      Category category, String content) async {
     var page = await GetCategoryContent.instance.getContent(category);
-    var text = page.tabs
-        .map((tab) => tab.getAll('raw-code'))
-        .reduce((list1, list2) => list1.followedBy(list2))
-        .firstWhere(
-            (code) => code.toLowerCase().contains(content.toLowerCase()),
-            orElse: () => null);
-            
-    if (text == null) return null;
+    var pieces = List<ContentPiece>();
+
+    for (var tab in page.tabs) {
+      pieces.addAll(tab.pieces.where(
+          (piece) => piece.data.toLowerCase().contains(content.toLowerCase())));
+    }
+
+    if (pieces.isEmpty) return pieces.toList();
+
     LineSplitter lineSplitter = LineSplitter();
-    var lines = lineSplitter.convert(text);
 
-    var index = lines.indexWhere(
-        (element) => element.toLowerCase().contains(content.toLowerCase()));
+    return pieces.map((e) {
+      var lines = lineSplitter.convert(e.data);
 
-    var minLine = 0;
-    var maxLine = lines.length - 1;
+      var index = lines.indexWhere(
+          (element) => element.toLowerCase().contains(content.toLowerCase()));
 
-    maxLine = min(maxLine, index + 2);
-    minLine = max(minLine, index - 2);
+      var minLine = 0;
+      var maxLine = lines.length - 1;
 
-    return lines.sublist(minLine, maxLine).join('\n');
+      maxLine = min(maxLine, index + 2);
+      minLine = max(minLine, index - 2);
+
+      var resultLines = lines.sublist(minLine, maxLine).join('\n');
+      return ContentPiece(e.type, resultLines);
+    }).toList();
   }
 }

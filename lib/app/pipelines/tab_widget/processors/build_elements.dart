@@ -8,10 +8,10 @@ class BuildElements extends Processor {
 
   @override
   Object safeExecute(PipelineContext context) {
-    final tab = context.properties["data"] as TabDefinition;
+    final pieces = context.properties["data"] as List<ContentPiece>;
     
     List<Widget> result = []; 
-    for (var element in tab.pieces) {
+    for (var element in pieces) {
       var newElement = elementBuilder.buildElement(element);
       if (newElement != null) result.add(newElement);
     }
