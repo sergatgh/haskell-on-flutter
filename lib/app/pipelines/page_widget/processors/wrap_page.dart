@@ -4,19 +4,20 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class WrapPage extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
-    var contents = context.properties["contents"] as PageDefinition;
-    var tabBar = context.properties["tabBar"] as TabBarView;
-    var appBar = context.properties["appBar"] as AppBar;
+  void safeExecute(PipelineContext context) {
+    var contents = context.get<PageDefinition>("contents");
+    var tabBar = context.get<TabBarView>("tabBar");
+    var appBar = context.get<AppBar>("appBar");
+    var buildContext = context.get<BuildContext>("buildContext");
 
     var result = DefaultTabController(
         length: contents.tabs.length,
         child: Scaffold(
-          // backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(buildContext).backgroundColor,
           appBar: appBar,
           body: tabBar,
         ));
     
-    return result;
+    context.setResult(result);
   }
 }

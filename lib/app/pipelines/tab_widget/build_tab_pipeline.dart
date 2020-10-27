@@ -11,6 +11,7 @@ class BuildTabPipeline extends Pipeline {
   ]);
 
   Widget getTab(List<ContentPiece> data, {wrap = false}) {
-    return this.execute<Widget>({'data': data, 'wrap': wrap})[0];
+    var result = this.execute<Widget>({'data': data, 'wrap': wrap});
+    return result;
   }
 }

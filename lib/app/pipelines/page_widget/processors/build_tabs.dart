@@ -5,7 +5,7 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class BuildTabs extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     var contents = context.properties["contents"] as PageDefinition;
 
     var tabs = <Widget>[];
@@ -18,7 +18,5 @@ class BuildTabs extends Processor {
     context.properties["tabBar"] = TabBarView(
       children: tabs,
     );
-
-    return null;
   }
 }

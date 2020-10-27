@@ -7,7 +7,7 @@ class BuildElements extends Processor {
   BuildContentElement elementBuilder = BuildContentElement();
 
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     final pieces = context.properties["data"] as List<ContentPiece>;
     
     List<Widget> result = []; 
@@ -16,7 +16,5 @@ class BuildElements extends Processor {
       if (newElement != null) result.add(newElement);
     }
     context.properties["result"] = result;
-
-    return null;
   }
 }

@@ -19,15 +19,15 @@ class PipelineContext {
     return get<T>(propertyName) != null;
   }
 
-  T get<T>(String propertyName) {
-    return getOrDefault<T>(propertyName, null);
+  T get<T>(String propertyName, { T or }) {
+    return getOr<T>(propertyName, or);
   }
 
-  T getResult<T>() {
-    return getOrDefault<T>("result", null);
+  T getResult<T>({T or}) {
+    return getOr<T>("result", or);
   }
 
-  T getOrDefault<T>(String propertyName, T defaultValue) {
+  T getOr<T>(String propertyName, T defaultValue) {
     if (!properties.containsKey(propertyName)) {
       return defaultValue;
     }

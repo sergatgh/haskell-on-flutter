@@ -31,6 +31,6 @@ class ContentPageState extends State<ContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return pageWidgetBuilder.getPage(pageDefinition);
+    return pageWidgetBuilder.getPage(pageDefinition, context);
   }
 }

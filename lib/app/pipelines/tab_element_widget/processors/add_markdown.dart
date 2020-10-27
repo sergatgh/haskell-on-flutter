@@ -5,16 +5,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AddMarkdown extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     final piece = context.get<ContentPiece>("data");
 
-    return MarkdownBody(
+    context.setResult(MarkdownBody(
         data: piece.data,
         onTapLink: (title, url, _) {
           canLaunch(url).then((value) {
             if (value) launch(url);
           });
-        });
+        }));
   }
 
   @override

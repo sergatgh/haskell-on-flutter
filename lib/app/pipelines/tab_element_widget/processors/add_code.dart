@@ -5,13 +5,15 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class AddCode extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     final content = context.get<ContentPiece>("data");
 
     if (content is SearchContentPiece) {
-      return HaskellCode(content.data);
+      context.setResult(HaskellCode(content.data));
+      return;
     }
-    return HaskellCodePiece(content.data);
+    context.setResult(HaskellCodePiece(content.data));
+    return;
   }
 
   @override

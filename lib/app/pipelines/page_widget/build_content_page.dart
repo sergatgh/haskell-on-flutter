@@ -10,7 +10,8 @@ class BuildContentPage extends Pipeline {
     BuildNavigationBar(), BuildTabs(), WrapPage()
   ]);
 
-  Widget getPage(PageDefinition contents) {
-    return this.execute<Widget>({'contents': contents})[0];
+  Widget getPage(PageDefinition contents, BuildContext buildContext) {
+    var result = this.execute<Widget>({'contents': contents, 'buildContext': buildContext});
+    return result;
   }
 }

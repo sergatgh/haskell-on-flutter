@@ -5,10 +5,10 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class AddCodeFromAsset extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     final content = context.properties["data"] as ContentPiece;
     
-    return AssetHaskellCode(file: content.data);
+    context.setResult(AssetHaskellCode(file: content.data));
   }
 
   @override

@@ -5,7 +5,7 @@ import 'package:icons_helper/icons_helper.dart';
 
 class BuildNavigationBar extends Processor {
   @override
-  Object safeExecute(PipelineContext context) {
+  void safeExecute(PipelineContext context) {
     var pageDefinition = context.properties["contents"] as PageDefinition;
     var title = pageDefinition.title;
 
@@ -24,8 +24,6 @@ class BuildNavigationBar extends Processor {
     }
 
     context.properties["appBar"] = appBar;
-
-    return null;
   }
 
   List<Widget> buildNavigationBar(PageDefinition pageDefinition) {

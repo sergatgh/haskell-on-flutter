@@ -13,6 +13,6 @@ class BuildContentElement extends Pipeline {
 
   Widget buildElement(ContentPiece data) {
     var result = this.execute<Widget>({'data': data });
-    return result.isEmpty ? null : result.first;
+    return result;
   }
 }
