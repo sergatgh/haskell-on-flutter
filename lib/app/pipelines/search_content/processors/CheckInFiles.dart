@@ -20,7 +20,7 @@ class CheckContentInFiles extends AsyncProcessor {
     var pieces = List<ContentPiece>();
 
     for (var tab in page.tabs) {
-      pieces.addAll(tab.pieces.where(
+      pieces.addAll(tab.getAllPieces('raw-code').where(
           (piece) => piece.data.toLowerCase().contains(content.toLowerCase())));
     }
 
@@ -40,7 +40,10 @@ class CheckContentInFiles extends AsyncProcessor {
       maxLine = min(maxLine, index + 2);
       minLine = max(minLine, index - 2);
 
-      var resultLines = lines.sublist(minLine, maxLine).join('\n');
+      var resultLines = lines
+          .sublist(minLine, maxLine)
+          .where((line) => line.trim().isNotEmpty)
+          .join('\n');
       return SearchContentPiece(e.type, resultLines);
     }).toList();
   }

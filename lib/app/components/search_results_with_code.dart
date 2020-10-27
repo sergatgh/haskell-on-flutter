@@ -100,6 +100,7 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children:
                         BuildTabPipeline.instance.getTab(content.foundContent)))
           ]);
