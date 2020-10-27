@@ -41,7 +41,7 @@ class CheckContentInFiles extends AsyncProcessor {
       minLine = max(minLine, index - 2);
 
       var resultLines = lines.sublist(minLine, maxLine).join('\n');
-      return ContentPiece(e.type, resultLines);
+      return SearchContentPiece(e.type, resultLines);
     }).toList();
   }
 }
