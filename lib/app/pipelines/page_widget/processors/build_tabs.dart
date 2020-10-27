@@ -11,8 +11,12 @@ class BuildTabs extends Processor {
     var tabs = <Widget>[];
 
     for (var value in contents.tabs) {
-      var tab = BuildTabPipeline.instance.getTab(value.pieces, wrap: true);
-      tabs.add(tab);
+      var tabPieces = BuildTabPipeline.instance.getTab(value.pieces);
+
+      tabs.add(ListView(
+        children: tabPieces,
+        padding: EdgeInsets.all(16.0),
+      ));
     }
 
     context.properties["tabBar"] = TabBarView(

@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/painting/text_span.dart';
+import 'package:haskell_is_beautiful/app/components/haskell_code.dart';
+import 'package:haskell_is_beautiful/app/components/haskell_syntax_highliter.dart';
+import 'package:markdown/markdown.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:haskell_is_beautiful/app/entities/content_piece.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
@@ -8,13 +13,17 @@ class AddMarkdown extends Processor {
   void safeExecute(PipelineContext context) {
     final piece = context.get<ContentPiece>("data");
 
-    context.setResult(MarkdownBody(
+    context.setResult(Container(
+      child: MarkdownBody(
         data: piece.data,
         onTapLink: (title, url, _) {
           canLaunch(url).then((value) {
             if (value) launch(url);
           });
-        }));
+        },
+        syntaxHighlighter: HaskellSyntaxHighliter(),
+      ),
+    ));
   }
 
   @override

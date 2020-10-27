@@ -92,14 +92,16 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
           Navigator.of(context).pushNamed(content.title);
         });
 
-    var column = content.foundContent.isEmpty ?? true
+    var column = content.foundContent.isEmpty
         ? linkDescription
         : Column(children: <Widget>[
             linkDescription,
             Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(10.0),
-                child: BuildTabPipeline.instance.getTab(content.foundContent, wrap: false))
+                child: Column(
+                    children:
+                        BuildTabPipeline.instance.getTab(content.foundContent)))
           ]);
 
     return Card(
