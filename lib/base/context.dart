@@ -7,7 +7,15 @@ class PipelineContext {
     properties.addAll(props);
   }
 
-  void addError(String message) {
+  void abort({String message}) {
+    isAborted = true;
+
+    if (message != null && message.isNotEmpty) {
+      addMessage(message);
+    }
+  }
+
+  void addMessage(String message) {
     messages.add(message);
   }
 

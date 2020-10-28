@@ -11,9 +11,9 @@ class JustDownload extends AsyncProcessor {
     var uri = Uri.tryParse(url);
 
     if (uri == null) {
-      context.addError("Link [$url] has an incorrect value.");
+      context.addMessage("Link [$url] has an incorrect value.");
     } else if (!uri.hasScheme) {
-      context.addError("Link [$url] should have a scheme like [https].");
+      context.addMessage("Link [$url] should have a scheme like [https].");
     } else {
       await new HttpClient()
           .getUrl(uri)

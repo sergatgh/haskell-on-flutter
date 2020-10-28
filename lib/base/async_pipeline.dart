@@ -13,6 +13,7 @@ class AsyncPipeline {
 
   Future runProcessors(PipelineContext context) async {
     for (var processor in this.processors) {
+      if (context.isAborted) break;
       await processor.execute(context);
     }
   }

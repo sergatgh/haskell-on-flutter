@@ -15,7 +15,7 @@ class DownloadMetadataFiles extends AsyncProcessor {
   Future<List<String>> getMetadataFiles(String url) async {
     var content = await DownloadContent.instance.download(url);
 
-    if (content.contains("Not Found")) {
+    if (content == null || content.isEmpty || content.contains("Not Found")) {
       return [];
     }
 

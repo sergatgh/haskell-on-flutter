@@ -14,6 +14,7 @@ class Pipeline {
 
   void runProcessors<T>(PipelineContext context) {
     for (var processor in this.processors) {
+      if (context.isAborted) break;
       processor.execute(context);
     }
   }

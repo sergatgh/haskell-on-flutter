@@ -1,3 +1,4 @@
+import 'package:haskell_is_beautiful/app/pipelines/common/abort_if_no_internet.dart';
 import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/processors/download_all_journals.dart';
 import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/processors/set_last_update.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
@@ -8,7 +9,7 @@ class DownloadCategories extends AsyncPipeline {
   static final DownloadCategories instance = DownloadCategories();
 
   DownloadCategories() : super([
-    DownloadAllJournals(), SetLastUpdate()
+    AbortIfNoInternet(), DownloadAllJournals(), SetLastUpdate()
   ]);
 
   Future download() async {
