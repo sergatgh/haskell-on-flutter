@@ -9,6 +9,7 @@ class PutContentInDatabase extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var categories = (context.properties["result"] as List<Category>);
 
+    await deleteAllFromDatabase();
     for (var category in categories) {
       var pageDefinition =
           await GetCategoryContent.instance.getContent(category);
@@ -19,6 +20,18 @@ class PutContentInDatabase extends AsyncProcessor {
   @override
   bool safeCondition(PipelineContext context) {
     return context.properties.containsKey("result");
+  }
+
+  Future deleteAllFromDatabase() async {
+    var script = (Database db) async {
+      await db.delete('category');
+      await db.delete(
+        'sqlite_sequence',
+        where: 'name IN (?, ?, ?)',
+        whereArgs: ['category', 'tab', 'piece'],
+      );
+    };
+    await ExecuteDatabaseCommand.instance.executeCommand(script);
   }
 
   Future addToDatabase(Category category, PageDefinition pageDefinition) async {
@@ -49,9 +62,7 @@ class PutContentInDatabase extends AsyncProcessor {
         });
       } else {
         final found = SqlCategory.fromMap(dbCategoryList[0]);
-        if (found.updated
-                ?.add(Duration(days: 1))
-                ?.isBefore(DateTime.now()) ??
+        if (found.updated?.add(Duration(days: 1))?.isBefore(DateTime.now()) ??
             true) {
           db.update(
               'category',
