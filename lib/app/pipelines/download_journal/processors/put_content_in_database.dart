@@ -9,12 +9,7 @@ class PutContentInDatabase extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var categories = (context.properties["result"] as List<Category>);
 
-    await deleteAllFromDatabase();
-    for (var category in categories) {
-      var pageDefinition =
-          await GetCategoryContent.instance.getContent(category);
-      await addToDatabase(category, pageDefinition);
-    }
+    await addToDatabase(categories);
   }
 
   @override
@@ -22,29 +17,29 @@ class PutContentInDatabase extends AsyncProcessor {
     return context.properties.containsKey("result");
   }
 
-  Future deleteAllFromDatabase() async {
+  Future addToDatabase(List<Category> categories) async {
     var script = (Database db) async {
-      await db.delete('category');
-      await db.delete(
-        'sqlite_sequence',
-        where: 'name IN (?, ?, ?)',
-        whereArgs: ['category', 'tab', 'piece'],
-      );
-    };
-    await ExecuteDatabaseCommand.instance.executeCommand(script);
-  }
+      // var dbCategoryList = await db.rawQuery("""
+      //     SELECT *
+      //     FROM category
+      //     WHERE category.category = ? AND category.title = ?
+      //     LIMIT 1
+      //     """, [category.topic, category.title]);
 
-  Future addToDatabase(Category category, PageDefinition pageDefinition) async {
-    var script = (Database db) async {
-      var dbCategoryList = await db.rawQuery("""
-          SELECT * 
-          FROM category 
-          WHERE category.category = ? AND category.title = ?
-          LIMIT 1
-          """, [category.topic, category.title]);
+      // if (dbCategoryList.isEmpty) {
 
-      if (dbCategoryList.isEmpty) {
-        await db.transaction((txn) async {
+      await db.transaction((txn) async {
+        await txn.delete('category');
+        await txn.delete('tab');
+        await txn.delete('piece');
+        await txn.delete(
+          'sqlite_sequence',
+          where: 'name IN (?, ?, ?)',
+          whereArgs: ['category', 'tab', 'piece'],
+        );
+        for (var category in categories) {
+          var pageDefinition =
+              await GetCategoryContent.instance.getContent(category);
           var categoryId = await txn.insert('category', {
             'category': category.topic,
             'title': category.title,
@@ -59,23 +54,24 @@ class PutContentInDatabase extends AsyncProcessor {
                   {'owner': tabId, 'type': piece.type, 'data': piece.data});
             }
           }
-        });
-      } else {
-        final found = SqlCategory.fromMap(dbCategoryList[0]);
-        if (found.updated?.add(Duration(days: 1))?.isBefore(DateTime.now()) ??
-            true) {
-          db.update(
-              'category',
-              {
-                'category': category.topic,
-                'title': category.title,
-                'icon': category.icon,
-                'updated': DateTime.now().toString()
-              },
-              where: 'id = ?',
-              whereArgs: [found.id]);
         }
-      }
+      });
+      // } else {
+      //   final found = SqlCategory.fromMap(dbCategoryList[0]);
+      //   if (found.updated?.add(Duration(days: 1))?.isBefore(DateTime.now()) ??
+      //       true) {
+      //     db.update(
+      //         'category',
+      //         {
+      //           'category': category.topic,
+      //           'title': category.title,
+      //           'icon': category.icon,
+      //           'updated': DateTime.now().toString()
+      //         },
+      //         where: 'id = ?',
+      //         whereArgs: [found.id]);
+      //   }
+      // }
     };
 
     await ExecuteDatabaseCommand.instance.executeCommand(script);

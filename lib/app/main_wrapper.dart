@@ -33,7 +33,8 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
         var date = DateTime.tryParse(lastUpdate);
         if (date == null ||
             date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-          downloadTopics().then((_) => getTopics());
+              loading = true;
+          downloadTopics().then((_) => getTopics()).then((_) => loading = false);
         } else {
           getTopics();
         }

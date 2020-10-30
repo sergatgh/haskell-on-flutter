@@ -1,9 +1,9 @@
 name: haskell_is_beautiful
-description: A new Flutter project.
+description: "This is a try to compose two beautiful things: haskell language and flutter UI."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.1.0+2
+version: 0.2.0+3
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
