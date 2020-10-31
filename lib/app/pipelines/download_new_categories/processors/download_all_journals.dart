@@ -8,15 +8,15 @@ class DownloadAllJournals extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
     List<Provider> providers;
-    await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
+    var messages = await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
       var results = await db.query('provider');
       providers = results.map((e) => Provider.fromMap(e)).toList();
     });
+    context.messages.addAll(messages);
 
-    List<Future> downloads = [];
     for (var provider in providers) {
-      downloads.add(DownloadJournal.instance.download(provider));
+      messages = await DownloadJournal.instance.download(provider);
+      context.messages.addAll(messages);
     }
-    await Future.wait(downloads);
   }
 }

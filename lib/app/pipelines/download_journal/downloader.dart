@@ -17,8 +17,9 @@ class DownloadJournal extends AsyncPipeline {
     PutContentInDatabase()
   ]);
 
-  Future download(Provider provider) async {
+  Future<List<String>> download(Provider provider) async {
     final context = PipelineContext(props: {'provider': provider});
     await this.runProcessors(context);
+    return context.messages;
   }
 }

@@ -7,7 +7,7 @@ class AbortIfNoInternet extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
-      context.abort();
+      context.abort(message: "No internet connection.");
       context.properties["has_internet"] = false;
     } else {
       context.properties["has_internet"] = true;

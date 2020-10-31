@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:haskell_is_beautiful/app/pages/initial_content_loader.dart';
 import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/download_categories.dart';
 import 'package:haskell_is_beautiful/app/pipelines/get_categories/categories_builder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
@@ -20,21 +21,21 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   CategoriesBuilder topicRetriever = CategoriesBuilder();
   DownloadCategories downloader = DownloadCategories.instance;
   ContentContainer contentPageData;
-  bool loading = false;
+  String status = "";
 
   @override
   void initState() {
     super.initState();
 
+    this.updateStatus("Checking last update.");
     Settings.lastUpdate().then((lastUpdate) {
       if (lastUpdate == null) {
-        downloadTopics().then((_) => getTopics());
+        this.loadDataFromWeb();
       } else {
         var date = DateTime.tryParse(lastUpdate);
         if (date == null ||
             date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-              loading = true;
-          downloadTopics().then((_) => getTopics()).then((_) => loading = false);
+          this.loadDataFromWeb();
         } else {
           getTopics();
         }
@@ -42,14 +43,24 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     });
   }
 
-  Future downloadTopics() {
-    return downloader.download();
+  void updateStatus(String message) {
+    this.setState(() {
+      this.status = message;
+    });
+  }
+
+  Future downloadTopics() async {
+    updateStatus("Downloading the content from Network.");
+    var messages = await downloader.download();
+    this.updateStatus(messages.join("\n"));
   }
 
   Future getTopics() {
+    updateStatus("Content is loaded, preparing data.");
     return topicRetriever.getTopics(rootBundle).then((value) {
       setState(() {
         contentPageData = value;
+        this.status = "";
       });
     });
   }
@@ -73,21 +84,18 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   void loadDataFromWeb() {
     setState(() {
       this.contentPageData = null;
-      this.loading = true;
     });
 
-    downloader
-        .download()
-        .then((_) => topicRetriever.getTopics(rootBundle))
-        .then((value) => setState(() {
-              this.contentPageData = value;
-              this.loading = false;
-            }));
+    this.downloadTopics().then((_) => this.getTopics());
   }
 
   Widget getHome() {
+    if (this.status.isNotEmpty) {
+      return InitialContentLoader(
+        message: this.status,
+      );
+    }
     return CategoryListPage(
-      loading: loading,
       categories: this.contentPageData,
       refresh: this.loadDataFromWeb,
     );

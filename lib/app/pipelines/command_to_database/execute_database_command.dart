@@ -10,8 +10,9 @@ class ExecuteDatabaseCommand extends AsyncPipeline {
     GetDatabase(), ExecuteCommand(), /*CloseDatabase()*/
   ]);
 
-  Future executeCommand(Future Function(Database) func) async {
+  Future<List<String>> executeCommand(Future Function(Database) func) async {
     final context = PipelineContext(props: { "function": func });
     await this.runProcessors(context);
+    return context.messages;
   }
 }

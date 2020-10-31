@@ -35,3 +35,21 @@ abstract class TypedAsyncProcessor<T> {
 abstract class AsyncProcessor extends TypedAsyncProcessor<PipelineContext> {
 }
 
+abstract class TryProcessor extends AsyncProcessor {
+  @override
+  Future safeExecute(PipelineContext context) async {
+    try {
+      await tryExecute(context);
+    }
+    catch (ex, st) {
+      final message = this.getMessage(ex,st);
+      context.abort(message: message);
+    }
+  }
+
+  Future tryExecute(PipelineContext context);
+  String getMessage(exception, stackTrace) {
+    return "An error occured:\n$exception\n\n$stackTrace";
+  }
+}
+

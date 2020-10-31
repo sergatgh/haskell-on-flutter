@@ -7,7 +7,12 @@ class GetContentOfSql extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
     var category = context.get<SqlCategory>("resource");
-    var categoryContent = await getSqlContent(category.id);
+    var categoryContent; 
+    var messages = await ExecuteDatabaseCommand.instance.executeCommand((db) async => categoryContent =
+        await db.rawQuery(
+            "SELECT tab.id, tab.icon, piece.type, piece.data FROM tab INNER JOIN piece ON piece.owner = tab.id WHERE tab.owner = ?;",
+            [category.id]));
+    context.messages.addAll(messages);
     var tabGroups = groupBy(categoryContent, (obj) => obj["id"]);
 
     var result = List<TabDefinition>();
@@ -21,15 +26,6 @@ class GetContentOfSql extends AsyncProcessor {
       result.add(tabDefinition);
     }
     context.properties["result"] = PageDefinition(category.title, result);
-  }
-
-  Future<List<Map<String, dynamic>>> getSqlContent(int categoryId) async {
-    List<Map<String, dynamic>> result;
-    await ExecuteDatabaseCommand.instance.executeCommand((db) async => result =
-        await db.rawQuery(
-            "SELECT tab.id, tab.icon, piece.type, piece.data FROM tab INNER JOIN piece ON piece.owner = tab.id WHERE tab.owner = ?;",
-            [categoryId]));
-    return result;
   }
 
   @override

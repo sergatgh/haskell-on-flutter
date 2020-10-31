@@ -5,7 +5,7 @@ import 'package:haskell_is_beautiful/base/pipelines.dart';
 class GetTopicsFromDatabase extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    var categories = await this.getContent();
+    var categories = await this.getContent(context);
     if (!context.properties.containsKey("result")) {
       context.properties["result"] = categories;
     } else {
@@ -13,8 +13,11 @@ class GetTopicsFromDatabase extends AsyncProcessor {
     }
   }
 
-  Future<List<Category>> getContent() async {
-    var jsonFiles = await getMetadataFiles();
+  Future<List<Category>> getContent(PipelineContext context) async {
+    var jsonFiles;
+    var messages = await ExecuteDatabaseCommand.instance.executeCommand(
+        (db) async => jsonFiles = await db.rawQuery("SELECT * FROM category"));
+    context.messages.addAll(messages);
     var map = <Category>[];
 
     for (var json in jsonFiles) {
@@ -24,10 +27,4 @@ class GetTopicsFromDatabase extends AsyncProcessor {
     return map;
   }
 
-  Future<List<Map<String, dynamic>>> getMetadataFiles() async {
-    List<Map<String, dynamic>> result;
-    await ExecuteDatabaseCommand.instance.executeCommand(
-        (db) async => result = await db.rawQuery("SELECT * FROM category"));
-    return result;
-  }
 }

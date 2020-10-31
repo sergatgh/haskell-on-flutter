@@ -12,8 +12,9 @@ class DownloadCategories extends AsyncPipeline {
     AbortIfNoInternet(), DownloadAllJournals(), SetLastUpdate()
   ]);
 
-  Future download() async {
+  Future<List<String>> download() async {
     final context = PipelineContext();
     await this.runProcessors(context);
+    return context.messages;
   }
 }

@@ -5,9 +5,9 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 import 'package:recase/recase.dart';
 
-class GetTopicsFromGithub extends AsyncProcessor {
+class GetTopicsFromGithub extends TryProcessor {
   @override
-  Future safeExecute(PipelineContext context) async {
+  Future tryExecute(PipelineContext context) async {
     var categories = await this.getContent(context.get<List<String>>('links'));
     if (!context.properties.containsKey("result")) {
       context.properties["result"] = categories;

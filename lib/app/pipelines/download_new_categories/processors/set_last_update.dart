@@ -6,9 +6,10 @@ import 'package:sqflite/sqflite.dart';
 class SetLastUpdate extends AsyncProcessor {
   @override
   Future safeExecute(PipelineContext context) async {
-    await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
+    var messages = await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
       await db.update('settings',
           {'title': 'last-update', 'value': DateTime.now().toIso8601String()});
     });
+    context.messages.addAll(messages);
   }
 }

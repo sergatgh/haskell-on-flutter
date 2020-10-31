@@ -1,9 +1,9 @@
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 import 'package:sqflite/sqflite.dart';
 
-class GetDatabase extends AsyncProcessor {
+class GetDatabase extends TryProcessor {
   @override
-  Future safeExecute(PipelineContext context) async {
+  Future tryExecute(PipelineContext context) async {
     var databasesPath = await getDatabasesPath();
     String path = databasesPath + '/content.db';
     // open the database

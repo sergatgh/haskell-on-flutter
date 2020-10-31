@@ -4,12 +4,13 @@ import 'package:haskell_is_beautiful/app/pipelines/get_category_content/get_page
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 import 'package:sqflite/sqflite.dart';
 
-class PutContentInDatabase extends AsyncProcessor {
+class PutContentInDatabase extends TryProcessor {
   @override
-  Future safeExecute(PipelineContext context) async {
+  Future tryExecute(PipelineContext context) async {
     var categories = (context.properties["result"] as List<Category>);
 
-    await addToDatabase(categories);
+    final messages = await addToDatabase(categories);
+    context.messages.addAll(messages);
   }
 
   @override
@@ -17,7 +18,7 @@ class PutContentInDatabase extends AsyncProcessor {
     return context.properties.containsKey("result");
   }
 
-  Future addToDatabase(List<Category> categories) async {
+  Future<List<String>> addToDatabase(List<Category> categories) async {
     var script = (Database db) async {
       // var dbCategoryList = await db.rawQuery("""
       //     SELECT *
@@ -74,6 +75,6 @@ class PutContentInDatabase extends AsyncProcessor {
       // }
     };
 
-    await ExecuteDatabaseCommand.instance.executeCommand(script);
+    return await ExecuteDatabaseCommand.instance.executeCommand(script);
   }
 }

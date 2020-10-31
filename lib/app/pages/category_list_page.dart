@@ -7,9 +7,8 @@ import 'package:haskell_is_beautiful/app/entities/content_container.dart';
 class CategoryListPage extends StatelessWidget {
   final ContentContainer categories;
   final Function refresh;
-  final bool loading;
 
-  CategoryListPage({this.categories, this.refresh, this.loading});
+  CategoryListPage({this.categories, this.refresh});
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +20,14 @@ class CategoryListPage extends StatelessWidget {
   }
 
   Widget buildBody(BuildContext context) {
-    if (this.loading) {
-      return Center(child: Container(child: CircularProgressIndicator()));
-    }
-    else {
-      return buildListView(context);
-    }
+    return buildListView(context);
   }
 
   Widget buildListView(BuildContext context) {
     if (this.categories == null || this.categories.resources == null) {
-      return CategoryListView(categories: [],);
+      return CategoryListView(
+        categories: [],
+      );
     }
     return CategoryListView(categories: this.categories.resources);
   }
@@ -67,6 +63,3 @@ class CategoryListPage extends StatelessWidget {
     );
   }
 }
-
-
-

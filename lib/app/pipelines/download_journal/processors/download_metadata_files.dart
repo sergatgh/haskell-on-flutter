@@ -4,9 +4,9 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pipelines/download_from_url/download_content.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
-class DownloadMetadataFiles extends AsyncProcessor {
+class DownloadMetadataFiles extends TryProcessor {
   @override
-  Future safeExecute(PipelineContext context) async {
+  Future tryExecute(PipelineContext context) async {
     var provider = context.get<Provider>('provider');
     var links = await getMetadataFiles(provider.link);
     context.properties["links"] = links;
