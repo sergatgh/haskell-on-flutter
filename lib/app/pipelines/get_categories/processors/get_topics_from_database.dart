@@ -15,9 +15,8 @@ class GetTopicsFromDatabase extends AsyncProcessor {
 
   Future<List<Category>> getContent(PipelineContext context) async {
     var jsonFiles;
-    var messages = await ExecuteDatabaseCommand.instance.executeCommand(
-        (db) async => jsonFiles = await db.rawQuery("SELECT * FROM category"));
-    context.messages.addAll(messages);
+    await ExecuteDatabaseCommand.instance.executeCommand(
+        (db) async => jsonFiles = await db.rawQuery("SELECT * FROM category"), context.onMessage);
     var map = <Category>[];
 
     for (var json in jsonFiles) {

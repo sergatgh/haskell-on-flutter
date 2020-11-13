@@ -50,9 +50,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   }
 
   Future downloadTopics() async {
-    updateStatus("Downloading the content from Network.");
-    var messages = await downloader.download();
-    this.updateStatus(messages.join("\n"));
+    await downloader.download([(msg) => updateStatus(msg.message)]);
   }
 
   Future getTopics() {

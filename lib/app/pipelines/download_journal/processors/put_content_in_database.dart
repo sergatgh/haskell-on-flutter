@@ -9,8 +9,8 @@ class PutContentInDatabase extends TryProcessor {
   Future tryExecute(PipelineContext context) async {
     var categories = (context.properties["result"] as List<Category>);
 
-    final messages = await addToDatabase(categories);
-    context.messages.addAll(messages);
+    var script = addToDatabase(categories);
+    await ExecuteDatabaseCommand.instance.executeCommand(script, context.onMessage);
   }
 
   @override
@@ -18,8 +18,8 @@ class PutContentInDatabase extends TryProcessor {
     return context.properties.containsKey("result");
   }
 
-  Future<List<String>> addToDatabase(List<Category> categories) async {
-    var script = (Database db) async {
+  Future Function(Database) addToDatabase(List<Category> categories) {
+    return (Database db) async {
       // var dbCategoryList = await db.rawQuery("""
       //     SELECT *
       //     FROM category
@@ -75,6 +75,5 @@ class PutContentInDatabase extends TryProcessor {
       // }
     };
 
-    return await ExecuteDatabaseCommand.instance.executeCommand(script);
   }
 }

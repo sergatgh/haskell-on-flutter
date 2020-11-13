@@ -8,11 +8,10 @@ class GetContentOfSql extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var category = context.get<SqlCategory>("resource");
     var categoryContent; 
-    var messages = await ExecuteDatabaseCommand.instance.executeCommand((db) async => categoryContent =
+    await ExecuteDatabaseCommand.instance.executeCommand((db) async => categoryContent =
         await db.rawQuery(
             "SELECT tab.id, tab.icon, piece.type, piece.data FROM tab INNER JOIN piece ON piece.owner = tab.id WHERE tab.owner = ?;",
-            [category.id]));
-    context.messages.addAll(messages);
+            [category.id]), context.onMessage);
     var tabGroups = groupBy(categoryContent, (obj) => obj["id"]);
 
     var result = List<TabDefinition>();

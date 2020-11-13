@@ -7,15 +7,14 @@ class GetSettingFromDatabase extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var setting = context.get<String>("name");
     String value;
-    final messages = await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
+    await ExecuteDatabaseCommand.instance.executeCommand((Database db) async {
       var result = await db.query('settings',
           columns: ['value'], where: 'title = ?', whereArgs: [setting]);
 
       if (result.isNotEmpty && result.first.containsKey('value')) {
         value = result.first['value'];
       }
-    });
-    context.messages.addAll(messages);
+    }, context.onMessage);
 
     context.properties["result"] = value;
   }
