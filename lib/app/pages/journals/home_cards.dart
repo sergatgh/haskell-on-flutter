@@ -45,7 +45,7 @@ class HomeCards extends StatefulWidget {
 }
 
 class _HomeCardsState extends State<HomeCards> {
-  List<TaskListViewModel> taskLists = [];
+  List<TaskListViewModel> taskLists = [TaskListViewModel('123', 'Test', 'download')];
 
   @override
   void initState() {
