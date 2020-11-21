@@ -19,6 +19,9 @@ class AddMarkdown extends Processor {
           });
         },
         syntaxHighlighter: HaskellSyntaxHighliter(),
+        styleSheet: MarkdownStyleSheet(
+          textScaleFactor: 0.98
+        ),
       ),
     ));
   }
