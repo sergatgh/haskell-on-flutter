@@ -8,6 +8,8 @@ class PipelineContext {
     properties.addAll(props);
   }
 
+  operator []=(index, value) => properties[index] = value;
+
   void abort({String message, MessageType type = MessageType.Information}) {
     isAborted = true;
 

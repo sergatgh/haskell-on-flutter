@@ -8,13 +8,16 @@ class BuildElements extends Processor {
 
   @override
   void safeExecute(PipelineContext context) {
-    final pieces = context.properties["data"] as List<ContentPiece>;
-    
-    List<Widget> result = []; 
+    final pieces = context.get<List<ContentPiece>>("data");
+
+    List<Widget> result = [];
     for (var element in pieces) {
-      var newElement = elementBuilder.buildElement(element);
-      if (newElement != null) result.add(newElement);
+      final newElement = elementBuilder.buildElement(element);
+      if (newElement != null) {
+        result.add(newElement);
+      }
     }
-    context.properties["result"] = result;
+    
+    context["widgets"] = result;
   }
 }
