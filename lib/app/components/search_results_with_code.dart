@@ -99,10 +99,11 @@ class _SearchResultsWithCodeState extends State<SearchResultsWithCode> {
             Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(10.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children:
-                        BuildTabPipeline.instance.getTab(content.foundContent)))
+                child: BuildTabPipeline.instance.getTab(
+                    content.foundContent,
+                    (content) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: content)))
           ]);
 
     return Card(

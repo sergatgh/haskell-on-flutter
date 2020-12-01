@@ -6,7 +6,7 @@ import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/downl
 import 'package:haskell_is_beautiful/app/pipelines/get_categories/categories_builder.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_setting/settings.dart';
+import 'package:haskell_is_beautiful/app/pipelines/settings/settings.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   HaskellPocketBookApp();

@@ -9,7 +9,8 @@ class HaskellSyntaxHighliter extends SyntaxHighlighter {
     return TextSpan(
       style: TextStyle(
           fontFamily:
-              'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'),
+              'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace',
+          color: githubTheme['root']?.color ?? Color(0xff000000),),
       children: _convert(highlight.parse(source, language: 'haskell').nodes),
     );
   }
@@ -22,7 +23,7 @@ class HaskellSyntaxHighliter extends SyntaxHighlighter {
     _traverse(Node node) {
       if (node.value != null) {
         currentSpans.add(node.className == null
-            ? TextSpan(text: node.value)
+            ? TextSpan(text: node.value,)
             : TextSpan(text: node.value, style: githubTheme[node.className]));
       } else if (node.children != null) {
         List<TextSpan> tmp = [];
