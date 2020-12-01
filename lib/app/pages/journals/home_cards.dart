@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haskell_is_beautiful/app/pipelines/get_journals_previews/get_journals.dart';
 
 import 'background_data_provider.dart';
 import 'card_list_data_provider.dart';
@@ -45,18 +46,24 @@ class HomeCards extends StatefulWidget {
 }
 
 class _HomeCardsState extends State<HomeCards> {
-  List<TaskListViewModel> taskLists = [TaskListViewModel('123', 'Journal', 'wolfPackBattalion')];
+  List<JournalViewModel> taskLists = [];
 
   @override
   void initState() {
     super.initState();
+
+    GetJournalsPreviews.instance.getContent().then((value) {
+      this.setState(() {
+        taskLists = value;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var cards = taskLists
         .map((list) => HomeCardInstance(
-              taskListViewModel: list,
+              journal: list,
             ))
         .toList();
 
@@ -101,8 +108,7 @@ class _DateIndicatorState extends State<DateIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    var data =
-        "Latest : parse XML";
+    var data = "Latest : parse XML";
 
     return Center(
       child: Container(

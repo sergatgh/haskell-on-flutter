@@ -1,0 +1,1 @@
+export 'processors/get_journals_from_database.dart';

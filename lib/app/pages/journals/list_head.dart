@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'task_list_view_model.dart';
 
 class ListHead extends StatelessWidget {
-  final TaskListViewModel taskListViewModel;
+  final JournalViewModel journal;
 
   const ListHead({
-    @required this.taskListViewModel,
+    @required this.journal,
     Key key,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class ListHead extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Hero(
-            tag: 'tasks-number-' + this.taskListViewModel.identifier,
+            tag: 'tasks-number-' + this.journal.identifier,
             child: buildTitleInformation(context),
           ),
           buildProgressBar()
@@ -64,12 +64,12 @@ class ListHead extends StatelessWidget {
   }
 
   Text buildTitleText(BuildContext context) =>
-      Text(this.taskListViewModel.title,
+      Text(this.journal.title,
           style: Theme.of(context).textTheme.headline4);
 
   Text buildTasksAmountText() {
     return Text(
-      "Witty Lion",    
+      "Journal by",    
       style: TextStyle(
           fontSize: 20.0, fontWeight: FontWeight.w300, letterSpacing: 0.15),
     );
