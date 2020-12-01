@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app/main_wrapper.dart';
-import 'app/pages/journals/home_cards.dart';
+import 'app/pages/journals/home_page.dart';
 
 void main() => runApp(MainWrapper());
 
@@ -9,5 +8,5 @@ void main() => runApp(MainWrapper());
 class MainWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      MaterialApp(home: HomeCardsWrapper());
+      MaterialApp(home: HomePage());
 }

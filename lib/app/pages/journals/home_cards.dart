@@ -45,7 +45,7 @@ class HomeCards extends StatefulWidget {
 }
 
 class _HomeCardsState extends State<HomeCards> {
-  List<TaskListViewModel> taskLists = [TaskListViewModel('123', 'Test', 'download')];
+  List<TaskListViewModel> taskLists = [TaskListViewModel('123', 'Journal', 'wolfPackBattalion')];
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _DateIndicatorState extends State<DateIndicator> {
   @override
   Widget build(BuildContext context) {
     var data =
-        "Today : is a good day";
+        "Latest : parse XML";
 
     return Center(
       child: Container(

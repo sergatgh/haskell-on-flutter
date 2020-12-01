@@ -27,14 +27,14 @@ class HomeInformation extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text("Hello, Sergey.",
+                  child: Text("Hello friend",
                       style: Theme.of(context)
                           .textTheme
                           .headline4
                           .apply(color: Colors.white)),
                 ),
                 Text(
-                    "Looks like feel good.\nYou have 3 tasks to do today.",
+                    "Here you will find Haskell journals.\nYou have 1 journal but you can add them later.",
                     style: Theme.of(context)
                         .textTheme
                         .bodyText2

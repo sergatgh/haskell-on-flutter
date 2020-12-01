@@ -69,7 +69,7 @@ class ListHead extends StatelessWidget {
 
   Text buildTasksAmountText() {
     return Text(
-      "Materials",    
+      "Witty Lion",    
       style: TextStyle(
           fontSize: 20.0, fontWeight: FontWeight.w300, letterSpacing: 0.15),
     );

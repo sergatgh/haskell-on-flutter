@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       leading: Icon(Icons.menu),
       elevation: 0.0,
-      title: Center(child: Text('TODO')),
+      title: Center(child: Text('YOUR HASKELL')),
       actions: <Widget>[IconButton(icon: Icon(Icons.search), onPressed: () {})],
       backgroundColor: Colors.transparent,
     );
