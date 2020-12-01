@@ -6,5 +6,8 @@ class Settings {
       await SettingGetter.instance.get('last-update');
       
   static Future markLastUpdate() async =>
-      await SettingSetter.instance.set('last-update', DateTime.now().toIso8601String());
+      await setValue('last-update', DateTime.now().toIso8601String());
+
+  static Future setValue(String name, Object value) async =>
+      await SettingSetter.instance.set(name, value);
 }

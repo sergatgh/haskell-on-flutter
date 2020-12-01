@@ -8,6 +8,8 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 import 'package:haskell_is_beautiful/app/pipelines/settings/settings.dart';
 
+import 'pages/journals/home_page.dart';
+
 class HaskellPocketBookApp extends StatefulWidget {
   HaskellPocketBookApp();
 
@@ -67,7 +69,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: getHome(),
+      home: HomePage(),
       routes: getRoutes(),
       theme: getThemeData(),
     );
@@ -100,12 +102,14 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   }
 
   Map<String, Widget Function(BuildContext)> getRoutes() {
-    var map = Map.fromIterable(
+    Map<String, Widget Function(BuildContext)> map = Map.fromIterable(
         this.contentPageData == null ? [] : this.contentPageData.resources,
         key: (c) => c.title as String,
         value: (c) => (BuildContext context) => ContentPage(
               content: c,
             ));
+
+    map.putIfAbsent("journal", () => (c) => getHome());
 
     return map;
   }
