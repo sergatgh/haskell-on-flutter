@@ -27,7 +27,7 @@ class HomeInformation extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text("Hello friend",
+                  child: Text("Pocket Book",
                       style: Theme.of(context)
                           .textTheme
                           .headline4

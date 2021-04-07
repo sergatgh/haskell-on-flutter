@@ -69,7 +69,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: HomePage(refresh: this.loadDataFromWeb,),
       routes: getRoutes(),
       theme: getThemeData(),
     );

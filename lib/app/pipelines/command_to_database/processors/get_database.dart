@@ -64,8 +64,9 @@ class GetDatabase extends TryProcessor {
     )
     """,
     """
-    INSERT INTO provider VALUES (
-      1, 'Witty Lion', 'https://api.github.com/repositories/307157040/contents/Topics', 'wolfPackBattalion');
+    INSERT INTO provider VALUES 
+      (1, 'Witty Lion', 'https://api.github.com/repositories/307157040/contents/Topics', 'wolfPackBattalion'),
+      (2, 'Custom', 'https://api.github.com/repositories/307157040/contents/Topics', 'wolfPackBattalion');
     """,
     """
     INSERT INTO settings VALUES (
