@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:icons_helper/icons_helper.dart';
 
 import 'LinearGradientMask.dart';
-import 'card_list_data_provider.dart';
+import '../../providers/card_list_data_provider.dart';
 import 'list_head.dart';
-import 'task_list_view_model.dart';
+import '../../journal_view.dart';
 
-class HomeCardInstance extends StatelessWidget {
+class JournalCard extends StatelessWidget {
   final JournalViewModel journal;
 
-  const HomeCardInstance({Key key, @required this.journal}) : super(key: key);
+  const JournalCard({Key key, @required this.journal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,11 @@ class HomeCardInstance extends StatelessWidget {
           Navigator.of(context).pushNamed("journal", arguments: {
             'journal': this.journal
           }).then((value) => CardListDataProvider.of(context).updateCards())
+      },
+      onTap: () => {
+        Navigator.of(context).pushNamed("journal", arguments: {
+          'journal': this.journal
+        }).then((value) => CardListDataProvider.of(context).updateCards())
       },
       child: Card(
         shape: RoundedRectangleBorder(

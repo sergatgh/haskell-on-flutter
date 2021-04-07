@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:haskell_is_beautiful/app/pipelines/get_journals_previews/get_journals.dart';
 
-import 'background_data_provider.dart';
-import 'card_list_data_provider.dart';
-import 'home_card_instance.dart';
-import 'task_list_view_model.dart';
+import '../../providers/background_data_provider.dart';
+import '../../providers/card_list_data_provider.dart';
+import '../../components/cards/card.dart';
+import '../../journal_view.dart';
 
-class HomeCardsWrapper extends StatelessWidget {
-  const HomeCardsWrapper({Key key}) : super(key: key);
+class CardsContainer extends StatelessWidget {
+  const CardsContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _HomeCardsState extends State<HomeCards> {
   @override
   Widget build(BuildContext context) {
     var cards = taskLists
-        .map((list) => HomeCardInstance(
+        .map((list) => JournalCard(
               journal: list,
             ))
         .toList();

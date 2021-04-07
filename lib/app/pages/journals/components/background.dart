@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class HomeBackground extends StatelessWidget {
+class Background extends StatelessWidget {
   final Widget child;
   final List<Color> colors;
 
-  HomeBackground({
+  Background({
     this.child,
     this.colors,
   });

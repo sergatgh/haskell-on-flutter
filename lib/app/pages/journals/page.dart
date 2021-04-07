@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
-import 'background_data_provider.dart';
-import 'home_background.dart';
-import 'home_page_content.dart';
+import 'providers/background_data_provider.dart';
+import 'components/background.dart';
+import 'components/body.dart';
 
 class HomePage extends StatefulWidget {
   final Function refresh;
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeBackground(colors: colors, child: buildPage(context));
+    return Background(colors: colors, child: buildPage(context));
   }
 
   void changeColors(int number) {
@@ -53,27 +52,27 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildBody(BuildContext context) {
     return BackgroundDataProvider(
-        changeColor: changeColors, child: HomePageContent());
+        changeColor: changeColors, child: Body());
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
-      leading: Icon(Icons.menu),
+      // leading: Icon(Icons.menu),
       elevation: 0.0,
-      title: Center(child: Text('HASKELL IS BEAUTIFUL')),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.delete_forever),
-          onPressed: () {
-            getDatabasesPath()
-                .then((value) => value + '/content.db')
-                .then((value) => deleteDatabase(value))
-                .then((value) => this.widget.refresh?.call());
-          },
-        ),
-        // SEARCH
-        //IconButton(icon: Icon(Icons.search), onPressed: () {})
-      ],
+      title: Center(child: Text('HASKELL POCKET BOOK')),
+      // actions: <Widget>[
+      //   IconButton(
+      //     icon: Icon(Icons.delete_forever),
+      //     onPressed: () {
+      //       getDatabasesPath()
+      //           .then((value) => value + '/content.db')
+      //           .then((value) => deleteDatabase(value))
+      //           .then((value) => this.widget.refresh?.call());
+      //     },
+      //   ),
+      //   // SEARCH
+      //   //IconButton(icon: Icon(Icons.search), onPressed: () {})
+      // ],
       backgroundColor: Colors.transparent,
     );
   }

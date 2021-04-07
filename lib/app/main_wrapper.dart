@@ -8,7 +8,7 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 import 'package:haskell_is_beautiful/app/pipelines/settings/settings.dart';
 
-import 'pages/journals/home_page.dart';
+import 'pages/journals/page.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   HaskellPocketBookApp();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'home_cards.dart';
-import 'home_info.dart';
+import 'cards/cards_container.dart';
+import 'info/info.dart';
 
-class HomePageContent extends StatelessWidget {
-  const HomePageContent({Key key}) : super(key: key);
+class Body extends StatelessWidget {
+  const Body({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,11 @@ class HomePageContent extends StatelessWidget {
       children: <Widget>[
         Flexible(
           flex: 4,
-          child: HomeInformation(),
+          child: Information(),
         ),
         Flexible(
           flex: 8,
-          child: HomeCardsWrapper(),
+          child: CardsContainer(),
         ),
         Spacer()
       ],

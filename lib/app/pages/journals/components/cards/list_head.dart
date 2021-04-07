@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'task_list_view_model.dart';
+import '../../journal_view.dart';
 
 class ListHead extends StatelessWidget {
   final JournalViewModel journal;

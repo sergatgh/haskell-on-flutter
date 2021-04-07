@@ -1,4 +1,4 @@
-import 'package:haskell_is_beautiful/app/pages/journals/task_list_view_model.dart';
+import 'package:haskell_is_beautiful/app/pages/journals/journal_view.dart';
 import 'package:haskell_is_beautiful/app/pipelines/command_to_database/execute_database_command.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 import 'package:sqflite/sqflite.dart';

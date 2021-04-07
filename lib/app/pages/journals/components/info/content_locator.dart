@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CenterContent extends StatelessWidget {
+class ContentLocator extends StatelessWidget {
   final Widget child;
 
-  const CenterContent({Key key, this.child}) : super(key: key);
+  const ContentLocator({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

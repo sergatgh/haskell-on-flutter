@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/pages/journals/CenterContent.dart';
+import 'package:haskell_is_beautiful/app/pages/journals/components/info/content_locator.dart';
 
-class HomeInformation extends StatelessWidget {
-  const HomeInformation({
+class Information extends StatelessWidget {
+  const Information({
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CenterContent(
+    return ContentLocator(
             child: Column(
         mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -27,7 +27,7 @@ class HomeInformation extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text("Pocket Book",
+                  child: Text("Status:",
                       style: Theme.of(context)
                           .textTheme
                           .headline4
