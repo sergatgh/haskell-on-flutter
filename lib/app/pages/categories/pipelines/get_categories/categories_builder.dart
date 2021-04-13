@@ -1,9 +1,10 @@
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/get_topics_from_assets.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/get_topics_from_database.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_categories/processors/wrap_categories.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
+
+import 'processors/get_topics_from_assets.dart';
+import 'processors/get_topics_from_database.dart';
+import 'processors/wrap_categories.dart';
 
 // Retrieves ContentContainer
 class CategoriesBuilder extends AsyncPipeline {

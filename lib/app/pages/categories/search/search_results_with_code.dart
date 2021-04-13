@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:haskell_is_beautiful/app/pipelines/search_content/content_finder.dart';
+import 'package:haskell_is_beautiful/app/pages/article/pipelines/tab_widget/build_tab_pipeline.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
-import 'package:haskell_is_beautiful/app/pipelines/tab_widget/build_tab_pipeline.dart';
+import '../pipelines/search_content/content_finder.dart';
 import 'package:icons_helper/icons_helper.dart';
 
 class SearchResultsWithCode extends StatefulWidget {

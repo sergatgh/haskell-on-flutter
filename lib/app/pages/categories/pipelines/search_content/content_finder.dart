@@ -1,6 +1,7 @@
-import 'package:haskell_is_beautiful/app/pipelines/search_content/processors/CheckInFiles.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
+
+import 'processors/CheckInFiles.dart';
 
 class ContentFinder extends AsyncPipeline {
   ContentFinder() : super([CheckContentInFiles()]);

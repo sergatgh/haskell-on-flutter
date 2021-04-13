@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/components/search_results_with_code.dart';
+import './search_results_with_code.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 
-import 'category_list_view.dart';
+import '../../../components/category_list_view.dart';
 
 class ContentSearch extends SearchDelegate<ContentContainer> {
   final ContentContainer categories;

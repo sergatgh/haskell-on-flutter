@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:haskell_is_beautiful/app/entities.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_category_content/get_page_definition.dart';
+import 'package:haskell_is_beautiful/app/pages/categories/pipelines/get_category_content/get_page_definition.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class CheckContentInFiles extends AsyncProcessor {

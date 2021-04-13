@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/pipelines/tab_widget/build_tab_pipeline.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
+import 'package:haskell_is_beautiful/app/pages/article/pipelines/tab_widget/build_tab_pipeline.dart';
 import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 class BuildTabs extends Processor {
