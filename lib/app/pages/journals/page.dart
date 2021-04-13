@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:haskell_is_beautiful/app/pages/journals/journal_view.dart';
 
-import 'providers/background_data_provider.dart';
 import 'components/background.dart';
 import 'components/body.dart';
 
-class HomePage extends StatefulWidget {
-  final Function refresh;
+class JouranlsOverview extends StatefulWidget {
+  final Function reloadData;
+  final List<JournalViewModel> journals;
 
   static List<List<Color>> colors = [
     [
@@ -18,15 +19,15 @@ class HomePage extends StatefulWidget {
     ],
   ];
 
-  const HomePage({Key key, this.refresh}) : super(key: key);
+  const JouranlsOverview({this.reloadData, this.journals = const []})
+      : super(key: const ObjectKey(const []));
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _JouranlsOverviewState createState() => _JouranlsOverviewState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<Color> colors = HomePage.colors[0];
-  Widget page;
+class _JouranlsOverviewState extends State<JouranlsOverview> {
+  List<Color> colors = JouranlsOverview.colors[0];
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +35,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   void changeColors(int number) {
-    var length = HomePage.colors.length;
+    var length = JouranlsOverview.colors.length;
     var colorNumber = number % length;
     setState(() {
-      colors = HomePage.colors[colorNumber];
+      colors = JouranlsOverview.colors[colorNumber];
     });
   }
 
   Widget buildPage(BuildContext context) {
-    return this.page ??
-        (this.page = Scaffold(
+    return Scaffold(
           backgroundColor: Colors.transparent,
           appBar: buildAppBar(context),
           body: buildBody(context),
-        ));
+        );
   }
 
   Widget buildBody(BuildContext context) {
-    return BackgroundDataProvider(
-        changeColor: changeColors, child: Body());
+    return Body(
+      onPageChanged: this.changeColors,
+      journals: widget.journals,
+    );
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {

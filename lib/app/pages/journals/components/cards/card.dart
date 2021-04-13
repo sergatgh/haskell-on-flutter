@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:icons_helper/icons_helper.dart';
 
 import 'LinearGradientMask.dart';
-import '../../providers/card_list_data_provider.dart';
 import 'list_head.dart';
 import '../../journal_view.dart';
 
@@ -19,12 +18,12 @@ class JournalCard extends StatelessWidget {
         if (details.delta.dy < -10)
           Navigator.of(context).pushNamed("journal", arguments: {
             'journal': this.journal
-          }).then((value) => CardListDataProvider.of(context).updateCards())
+          }).then((value) => { })
       },
       onTap: () => {
         Navigator.of(context).pushNamed("journal", arguments: {
           'journal': this.journal
-        }).then((value) => CardListDataProvider.of(context).updateCards())
+        }).then((value) => { })
       },
       child: Card(
         shape: RoundedRectangleBorder(

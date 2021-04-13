@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:haskell_is_beautiful/app/pages/initial_content_loader.dart';
-import 'package:haskell_is_beautiful/app/pipelines/download_new_categories/download_categories.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_categories/categories_builder.dart';
+import 'package:haskell_is_beautiful/app/pages/journals/journal_view.dart';
+import 'package:haskell_is_beautiful/app/pages/loading/initial_content_loader.dart';
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
-import 'package:haskell_is_beautiful/app/pipelines/settings/settings.dart';
+import 'package:haskell_is_beautiful/app/pipelines.dart';
 
 import 'pages/journals/page.dart';
 
@@ -23,6 +22,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   CategoriesBuilder topicRetriever = CategoriesBuilder();
   DownloadCategories downloader = DownloadCategories.instance;
   ContentContainer contentPageData;
+  List<JournalViewModel> journals = [];
   String status = "";
 
   @override
@@ -42,7 +42,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
           getTopics();
         }
       }
-    });
+    }).then((value) => this.getJournals());
   }
 
   void updateStatus(String message) {
@@ -65,11 +65,22 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     });
   }
 
+  Future getJournals() {
+    return GetJournalsPreviews.instance
+        .getContent()
+        .then((value) => this.setState(() {
+              this.journals = value;
+            }));
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(refresh: this.loadDataFromWeb,),
+      home: JouranlsOverview(
+        reloadData: this.loadDataFromWeb,
+        journals: this.journals,
+      ),
       routes: getRoutes(),
       theme: getThemeData(),
     );
@@ -89,7 +100,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     this.downloadTopics().then((_) => this.getTopics());
   }
 
-  Widget getHome() {
+  Widget getHome(BuildContext context) {
     if (this.status.isNotEmpty) {
       return InitialContentLoader(
         message: this.status,
@@ -109,7 +120,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
               content: c,
             ));
 
-    map.putIfAbsent("journal", () => (c) => getHome());
+    map.putIfAbsent("journal", () => getHome);
 
     return map;
   }

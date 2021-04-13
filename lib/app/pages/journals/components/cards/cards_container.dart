@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/pipelines/get_journals_previews/get_journals.dart';
 
-import '../../providers/background_data_provider.dart';
-import '../../providers/card_list_data_provider.dart';
 import '../../components/cards/card.dart';
 import '../../journal_view.dart';
 
 class CardsContainer extends StatelessWidget {
-  const CardsContainer({Key key}) : super(key: key);
+  final Function(int) onPageChanged;
+  final List<JournalViewModel> journals;
+  const CardsContainer({Key key, this.onPageChanged, this.journals = const []})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,10 @@ class CardsContainer extends StatelessWidget {
   }
 
   Widget buildCartsList(BuildContext context) {
-    return HomeCards();
+    return Cards(
+      onPageChanged: this.onPageChanged,
+      pages: journals,
+    );
   }
 
   Widget buildDateText(BuildContext context) {
@@ -36,52 +39,42 @@ class CardsContainer extends StatelessWidget {
   }
 }
 
-class HomeCards extends StatefulWidget {
-  const HomeCards({
+class Cards extends StatefulWidget {
+  final List<JournalViewModel> pages;
+  final Function(int) onPageChanged;
+
+  const Cards({
     Key key,
+    this.onPageChanged,
+    this.pages = const [],
   }) : super(key: key);
 
   @override
-  _HomeCardsState createState() => _HomeCardsState();
+  _CardsState createState() => _CardsState();
 }
 
-class _HomeCardsState extends State<HomeCards> {
-  List<JournalViewModel> taskLists = [];
-
+class _CardsState extends State<Cards> {
   @override
   void initState() {
     super.initState();
-
-    GetJournalsPreviews.instance.getContent().then((value) {
-      this.setState(() {
-        taskLists = value;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var cards = taskLists
+    var cards = widget.pages
         .map((list) => JournalCard(
               journal: list,
             ))
         .toList();
 
-    var background = BackgroundDataProvider.of(context);
-    var onCardChange = background?.changeColor;
-    return CardListDataProvider(
-      updateCards: () {
-        this.setState(() {});
-      },
-      child: PageView(
-        controller: PageController(
-          viewportFraction: 0.8,
-          initialPage: 0,
-        ),
-        children: cards,
-        onPageChanged: onCardChange,
-        physics: BouncingScrollPhysics(),
+    return PageView(
+      controller: PageController(
+        viewportFraction: 0.8,
+        initialPage: 0,
       ),
+      children: cards,
+      onPageChanged: widget.onPageChanged,
+      physics: BouncingScrollPhysics(),
     );
   }
 }
