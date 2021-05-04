@@ -79,12 +79,16 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: JouranlsOverview(
-        reloadData: this.loadDataFromWeb,
-        journals: this.journals,
-      ),
+      home: getStartScreen(),
       routes: getRoutes(),
       theme: getThemeData(),
+    );
+  }
+
+  Widget getStartScreen() {
+    return JouranlsOverview(
+      reloadData: this.loadDataFromWeb,
+      journals: this.journals,
     );
   }
 
@@ -102,7 +106,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     this.downloadTopics().then((_) => this.getTopics());
   }
 
-  Widget getHome(BuildContext context) {
+  Widget getJournalScreen(BuildContext context) {
     if (this.status.isNotEmpty) {
       return InitialContentLoader(
         message: this.status,
@@ -122,7 +126,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
               content: c,
             ));
 
-    map.putIfAbsent("journal", () => getHome);
+    map.putIfAbsent("journal", () => getJournalScreen);
 
     return map;
   }

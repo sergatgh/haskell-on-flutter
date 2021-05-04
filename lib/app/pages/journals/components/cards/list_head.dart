@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../../journal_view.dart';
+import 'package:haskell_is_beautiful/app/providers/JournalDataProvider.dart';
 
 class ListHead extends StatelessWidget {
-  final JournalViewModel journal;
-
   const ListHead({
-    @required this.journal,
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final journal = JournalDataProvider.of(context).journal;
     return Container(
       // color: Colors.cyan,
       child: Column(
@@ -20,7 +17,7 @@ class ListHead extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Hero(
-            tag: 'tasks-number-' + this.journal.identifier,
+            tag: 'tasks-number-' + journal.identifier,
             child: buildTitleInformation(context),
           ),
           buildProgressBar()
@@ -43,9 +40,7 @@ class ListHead extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            padding: EdgeInsets.only(left: 10),
-            child: Text("22%"))
+        Container(padding: EdgeInsets.only(left: 10), child: Text("22%"))
       ],
     );
   }
@@ -63,13 +58,14 @@ class ListHead extends StatelessWidget {
     ));
   }
 
-  Text buildTitleText(BuildContext context) =>
-      Text(this.journal.title,
-          style: Theme.of(context).textTheme.headline4);
+  Text buildTitleText(BuildContext context) {
+    final journal = JournalDataProvider.of(context).journal;
+    return Text(journal.title, style: Theme.of(context).textTheme.headline4);
+  }
 
   Text buildTasksAmountText() {
     return Text(
-      "Journal by",    
+      "Journal by",
       style: TextStyle(
           fontSize: 20.0, fontWeight: FontWeight.w300, letterSpacing: 0.15),
     );
