@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:haskell_is_beautiful/app/pages/journals/journal_view.dart';
 
 import 'components/background.dart';
 import 'components/body.dart';
 
 class JouranlsOverview extends StatefulWidget {
   final Function reloadData;
-  final List<JournalViewModel> journals;
 
   static List<List<Color>> colors = [
     [
@@ -19,7 +17,7 @@ class JouranlsOverview extends StatefulWidget {
     ],
   ];
 
-  const JouranlsOverview({this.reloadData, this.journals = const []})
+  const JouranlsOverview({this.reloadData})
       : super(key: const ObjectKey(const []));
 
   @override
@@ -53,7 +51,6 @@ class _JouranlsOverviewState extends State<JouranlsOverview> {
   Widget buildBody(BuildContext context) {
     return Body(
       onPageChanged: this.changeColors,
-      journals: widget.journals,
     );
   }
 

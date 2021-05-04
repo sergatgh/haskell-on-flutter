@@ -17,7 +17,7 @@ class CheckContentInFiles extends AsyncProcessor {
   Future<List<ContentPiece>> linkContainsContent(
       Category category, String content) async {
     var page = await GetCategoryContent.instance.getContent(category);
-    var pieces = List<ContentPiece>();
+    var pieces = <ContentPiece>[];
 
     for (var tab in page.tabs) {
       pieces.addAll(tab.getAllPieces('raw-code').where(

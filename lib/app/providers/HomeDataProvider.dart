@@ -3,15 +3,15 @@ import 'package:haskell_is_beautiful/app/pages/journals/journal_view.dart';
 
 class HomeDataProvider extends InheritedWidget {
   
-  final JournalViewModel Function() getJournals;
+  final List<JournalViewModel> journals;
 
   HomeDataProvider({
     Widget child,
-    this.getJournals,
+    this.journals,
   }) : super(child: child);
 
   @override
-  bool updateShouldNotify(HomeDataProvider oldWidget) => false;
+  bool updateShouldNotify(HomeDataProvider oldWidget) => this.journals != oldWidget.journals;
   static HomeDataProvider of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<HomeDataProvider>();
 }

@@ -14,10 +14,10 @@ class GetContentOfSql extends AsyncProcessor {
             [category.id]), context.onMessage);
     var tabGroups = groupBy(categoryContent, (obj) => obj["id"]);
 
-    var result = List<TabDefinition>();
+    var result = <TabDefinition>[];
     for (var tabKey in tabGroups.keys) {
       var tab = tabGroups[tabKey][0];
-      var pieces = List<ContentPiece>();
+      var pieces = <ContentPiece>[];
       for (var piece in tabGroups[tabKey]) {
         pieces.add(ContentPiece(piece["type"], piece["data"]));
       }

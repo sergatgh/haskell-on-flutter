@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:haskell_is_beautiful/app/providers/HomeDataProvider.dart';
+import 'package:haskell_is_beautiful/app/providers/JournalDataProvider.dart';
 
 import '../../components/cards/card.dart';
-import '../../journal_view.dart';
 
 class CardsContainer extends StatelessWidget {
   final Function(int) onPageChanged;
-  final List<JournalViewModel> journals;
-  const CardsContainer({Key key, this.onPageChanged, this.journals = const []})
+  const CardsContainer({Key key, this.onPageChanged})
       : super(key: key);
 
   @override
@@ -30,7 +30,6 @@ class CardsContainer extends StatelessWidget {
   Widget buildCartsList(BuildContext context) {
     return Cards(
       onPageChanged: this.onPageChanged,
-      pages: journals,
     );
   }
 
@@ -40,13 +39,11 @@ class CardsContainer extends StatelessWidget {
 }
 
 class Cards extends StatefulWidget {
-  final List<JournalViewModel> pages;
   final Function(int) onPageChanged;
 
   const Cards({
     Key key,
     this.onPageChanged,
-    this.pages = const [],
   }) : super(key: key);
 
   @override
@@ -61,10 +58,8 @@ class _CardsState extends State<Cards> {
 
   @override
   Widget build(BuildContext context) {
-    var cards = widget.pages
-        .map((list) => JournalCard(
-              journal: list,
-            ))
+    var cards = HomeDataProvider.of(context).journals
+        .map((journal) => JournalDataProvider(child: JournalCard(), journal: journal))
         .toList();
 
     return PageView(

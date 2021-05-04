@@ -6,6 +6,7 @@ import 'package:haskell_is_beautiful/app/pages/loading/initial_content_loader.da
 import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 import 'package:haskell_is_beautiful/app/pipelines.dart';
+import 'package:haskell_is_beautiful/app/providers/HomeDataProvider.dart';
 
 import 'pages/categories/pipelines/get_categories/categories_builder.dart';
 import 'pages/journals/page.dart';
@@ -86,8 +87,10 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   }
 
   Widget getStartScreen() {
-    return JouranlsOverview(
-      reloadData: this.loadDataFromWeb,
+    return HomeDataProvider(
+      child: JouranlsOverview(
+        reloadData: this.loadDataFromWeb,
+      ),
       journals: this.journals,
     );
   }

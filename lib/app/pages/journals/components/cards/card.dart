@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:haskell_is_beautiful/app/providers/JournalDataProvider.dart';
 import 'package:icons_helper/icons_helper.dart';
 
 import 'LinearGradientMask.dart';
 import 'list_head.dart';
-import '../../journal_view.dart';
 
 class JournalCard extends StatelessWidget {
-  final JournalViewModel journal;
-
-  const JournalCard({Key key, @required this.journal}) : super(key: key);
+  const JournalCard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final journal = JournalDataProvider.of(context).journal;
     return Container(
         child: GestureDetector(
       onVerticalDragUpdate: (details) => {
         if (details.delta.dy < -10)
           Navigator.of(context).pushNamed("journal", arguments: {
-            'journal': this.journal
+            'journal': journal
           }).then((value) => { })
       },
       onTap: () => {
         Navigator.of(context).pushNamed("journal", arguments: {
-          'journal': this.journal
+          'journal': journal
         }).then((value) => { })
       },
       child: Card(
@@ -45,7 +44,7 @@ class JournalCard extends StatelessWidget {
                             child: CircleAvatar(
                               child: LinearGradientMask(
                                 child: Icon(
-                                  getFontAwesomeIcon(name: this.journal.icon),
+                                  getFontAwesomeIcon(name: journal.icon),
                                   size: 30,
                                 ),
                               ),
@@ -69,9 +68,7 @@ class JournalCard extends StatelessWidget {
               ),
               Flexible(
                   flex: 5,
-                  child: ListHead(
-                    journal: this.journal,
-                  )),
+                  child: ListHead()),
             ],
           ),
         ),

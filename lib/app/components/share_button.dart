@@ -8,7 +8,7 @@ class ShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
         child: Text("Share"), onPressed: () => Share.share(content));
   }
 }

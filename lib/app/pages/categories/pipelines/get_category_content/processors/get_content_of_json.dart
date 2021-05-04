@@ -7,9 +7,9 @@ class GetContentOfJson extends AsyncProcessor {
   Future safeExecute(PipelineContext context) async {
     var category = context.properties["resource"] as JsonCategory;
 
-    var result = List<TabDefinition>();
+    var result = <TabDefinition>[];
     for (var tabJson in category.json) {
-      var pieces = List<ContentPiece>();
+      var pieces = <ContentPiece>[];
       for (var piece in tabJson["content"]) {
         pieces.add(ContentPiece(piece["type"], piece["data"]));
       }
