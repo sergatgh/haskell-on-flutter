@@ -7,10 +7,12 @@ import 'package:haskell_is_beautiful/app/entities.dart';
 import 'package:haskell_is_beautiful/app/pages.dart';
 import 'package:haskell_is_beautiful/app/pipelines.dart';
 import 'package:haskell_is_beautiful/app/providers/HomeDataProvider.dart';
+import 'package:haskell_is_beautiful/base/pipelines.dart';
 
 import 'pages/categories/pipelines/get_categories/categories_builder.dart';
 import 'pages/journals/page.dart';
 import 'pages/journals/pipelines/get_journals_previews/get_journals.dart';
+import 'pipelines/router/create_router.dart';
 
 class HaskellPocketBookApp extends StatefulWidget {
   HaskellPocketBookApp();
@@ -23,57 +25,22 @@ class HaskellPocketBookApp extends StatefulWidget {
 
 class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   CategoriesBuilder topicRetriever = CategoriesBuilder();
-  DownloadCategories downloader = DownloadCategories.instance;
-  ContentContainer contentPageData;
   List<JournalViewModel> journals = [];
-  String status = "";
 
   @override
   void initState() {
     super.initState();
 
-    this.updateStatus("Checking last update.");
-    Settings.lastUpdate().then((lastUpdate) {
-      if (lastUpdate == null) {
-        this.loadDataFromWeb();
-      } else {
-        var date = DateTime.tryParse(lastUpdate);
-        if (date == null ||
-            date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-          this.loadDataFromWeb();
-        } else {
-          getTopics();
-        }
-      }
-    }).then((value) => this.getJournals());
-  }
-
-  void updateStatus(String message) {
-    this.setState(() {
-      this.status = message;
-    });
-  }
-
-  Future downloadTopics() async {
-    await downloader.download([(msg) => updateStatus(msg.message)]);
-  }
-
-  Future getTopics() {
-    updateStatus("Content is loaded, preparing data.");
-    return topicRetriever.getTopics(rootBundle).then((value) {
-      setState(() {
-        contentPageData = value;
-        this.status = "";
-      });
-    });
+    this.getJournals()
+      .then((value) => getRoutes(value));
   }
 
   Future getJournals() {
     return GetJournalsPreviews.instance
         .getContent()
-        .then((value) => this.setState(() {
+        .then((value){ this.setState(() {
               this.journals = value;
-            }));
+            }); return value;});
   }
 
   // This widget is the root of your application.
@@ -81,7 +48,7 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: getStartScreen(),
-      routes: getRoutes(),
+      onGenerateRoute: UpdateRouter.instance.generateRoute,
       theme: getThemeData(),
     );
   }
@@ -89,7 +56,6 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
   Widget getStartScreen() {
     return HomeDataProvider(
       child: JouranlsOverview(
-        reloadData: this.loadDataFromWeb,
       ),
       journals: this.journals,
     );
@@ -99,38 +65,5 @@ class HaskellPocketBookAppState extends State<HaskellPocketBookApp> {
     return ThemeData(
         primaryColor: Color.fromARGB(255, 41, 62, 93),
         backgroundColor: Color.fromARGB(255, 244, 244, 244));
-  }
-
-  void loadDataFromWeb() {
-    setState(() {
-      this.contentPageData = null;
-    });
-
-    this.downloadTopics().then((_) => this.getTopics());
-  }
-
-  Widget getJournalScreen(BuildContext context) {
-    if (this.status.isNotEmpty) {
-      return InitialContentLoader(
-        message: this.status,
-      );
-    }
-    return CategoryListPage(
-      categories: this.contentPageData,
-      refresh: this.loadDataFromWeb,
-    );
-  }
-
-  Map<String, Widget Function(BuildContext)> getRoutes() {
-    Map<String, Widget Function(BuildContext)> map = Map.fromIterable(
-        this.contentPageData == null ? [] : this.contentPageData.resources,
-        key: (c) => c.title as String,
-        value: (c) => (BuildContext context) => ContentPage(
-              content: c,
-            ));
-
-    map.putIfAbsent("journal", () => getJournalScreen);
-
-    return map;
   }
 }

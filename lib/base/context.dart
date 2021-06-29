@@ -4,13 +4,14 @@ class PipelineContext {
   bool isAborted = false;
   final List<void Function(ContextMessage)> onMessage;
 
-  PipelineContext({Map<String, Object> props = const {}, this.onMessage = const []}) {
-    properties.addAll(props);
+  PipelineContext(
+      {Map<String, Object> props = const {}, this.onMessage = const []}) {
+    if (props != null) properties.addAll(props);
   }
 
   operator []=(index, value) => properties[index] = value;
 
-  void abort({String message, MessageType type = MessageType.Information}) {
+  void abort({String message, MessageType type = MessageType.Error}) {
     isAborted = true;
 
     if (message != null && message.isNotEmpty) {
@@ -20,21 +21,23 @@ class PipelineContext {
 
   void addMessage(String message,
       {MessageType type = MessageType.Information}) {
-
     var contextMessage = ContextMessage(message, type: type);
     messages.add(contextMessage);
     for (var trigger in onMessage) {
       trigger(contextMessage);
     }
-
   }
 
   void addError(String message) {
     addMessage(message, type: MessageType.Error);
   }
-  
+
   void addWaring(String message) {
     addMessage(message, type: MessageType.Warning);
+  }
+  
+  void set(String propertyName, Object value) {
+    properties[propertyName] = value;
   }
 
   void setResult(Object value) {
@@ -45,25 +48,54 @@ class PipelineContext {
     return get<T>(propertyName) != null;
   }
 
-  T get<T>(String propertyName, {T or}) {
+  T get<T>(String propertyName, {T Function() or}) {
     return getOr<T>(propertyName, or);
   }
 
-  T getResult<T>({T or}) {
+  string(String propertyName, {String Function() or}) {
+    return getOr<String>(propertyName, or);
+  }
+
+  T getResult<T>({T Function() or}) {
     return getOr<T>("result", or);
   }
 
-  T getOr<T>(String propertyName, T defaultValue) {
-    if (!properties.containsKey(propertyName)) {
-      return defaultValue;
+  T getOr<T>(String propertyName, T Function() getDefaultValue) {
+    if (properties.containsKey(propertyName)) {
+      final val = this.properties[propertyName];
+      if (val is T) {
+        return val;
+      }
     }
 
-    final val = this.properties[propertyName];
-    if (!(val is T)) {
-      return defaultValue;
-    }
+    if (getDefaultValue != null)
+      return getDefaultValue();
+    else
+      return null;
+  }
+  
+  String getWholeMessage() {
+    return this
+        .getAllMessages()
+        .join("\n");
+  }
+  
+  String getErrorMessage() {
+    return this
+        .getErrorMessages()
+        .join("\n");
+  }
 
-    return val as T;
+  List<String> getAllMessages() {
+    return this.messages.map((e) => e.message).toList();
+  }
+
+  List<String> getErrorMessages() {
+    return this
+        .messages
+        .where((element) => element.type == MessageType.Error)
+        .map((e) => e.message)
+        .toList();
   }
 }
 
