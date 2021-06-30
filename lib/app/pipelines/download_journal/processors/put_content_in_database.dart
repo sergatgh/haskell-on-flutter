@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 class PutContentInDatabase extends TryProcessor {
   @override
   Future tryExecute(PipelineContext context) async {
-    var categories = (context.properties["result"] as List<Category>);
+    var categories = context.getResult<List<Category>>();
 
     var script = addToDatabase(categories);
     await ExecuteDatabaseCommand.instance.executeCommand(script, context.onMessage);
@@ -15,7 +15,7 @@ class PutContentInDatabase extends TryProcessor {
 
   @override
   bool safeCondition(PipelineContext context) {
-    return context.properties.containsKey("result");
+    return context.has<List<Category>>("result");
   }
 
   Future Function(Database) addToDatabase(List<Category> categories) {
