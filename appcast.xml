@@ -8,5 +8,11 @@
       <pubDate>Fri, 23 Jul 2021 12:00:00 +0000</pubDate>
       <enclosure url="https://play.google.com/store/apps/details?id=com.WittyLion.haskell_is_beautiful" sparkle:version="0.3.1" sparkle:os="android" />
     </item>
+    <item>
+      <title>Version 0.3.3</title>
+      <description>Fixed progress bar. Added "Read more" section. Font of code made a bit bigger.</description>
+      <pubDate>Wed Aug 04 2021 12:00:00 +0000</pubDate>
+      <enclosure url="https://play.google.com/store/apps/details?id=com.WittyLion.haskell_is_beautiful" sparkle:version="0.3.3" sparkle:os="android" />
+    </item>
   </channel>
 </rss>
